@@ -1,6 +1,6 @@
 `timescale 1ns / 1ps
 
-module sim_adder_32bit;
+module sim_cla_32bit;
 
     reg [31:0] a, b;
     reg cin;
@@ -9,7 +9,7 @@ module sim_adder_32bit;
 
     integer in_file, out_file;
 
-    adder_32bit dut (
+    cla_32bit dut (
         .a(a),
         .b(b),
         .cin(cin),
@@ -19,7 +19,7 @@ module sim_adder_32bit;
 
     initial begin
         in_file  = $fopen("C:\\Users\\joaop\\energetic_efficiency\\energetic_efficiency.srcs\\sim_1\\new\\data\\entradas_32bits_uniforme.txt", "r");
-        out_file = $fopen("C:\\Users\\joaop\\energetic_efficiency\\energetic_efficiency.srcs\\sim_1\\new\\results\\ripple_carry_adder\\ripple_results_32bits.txt", "w");
+        out_file = $fopen("C:\\Users\\joaop\\energetic_efficiency\\energetic_efficiency.srcs\\sim_1\\new\\results\\carry_lookahead_adder\\cla_results_32bits.txt", "w");
 
         if (in_file == 0) begin
             $display("ERRO: não conseguiu abrir o arquivo de entrada.");

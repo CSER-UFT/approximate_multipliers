@@ -1,15 +1,15 @@
-`timescale 1ps/1ps
+`timescale 1ns / 1ps
 
-module sim_adder_16bit;
+module sim_cla_8bit;
 
-    reg  [15:0] a, b;
+    reg [7:0] a, b;
     reg cin;
-    wire [15:0] sum;
+    wire [7:0] sum;
     wire cout;
 
     integer in_file, out_file;
 
-    adder_16bit DUT (
+    cla_8bit dut (
         .a(a),
         .b(b),
         .cin(cin),
@@ -19,8 +19,8 @@ module sim_adder_16bit;
 
     initial begin
 
-        in_file = $fopen("C:\\Users\\joaop\\energetic_efficiency\\energetic_efficiency.srcs\\sim_1\\new\\data\\dados_16bits_uniforme.txt", "r");
-        out_file = $fopen("C:\\Users\\joaop\\energetic_efficiency\\energetic_efficiency.srcs\\sim_1\\new\\results\\ripple_carry_adder\\ripple_results_16bits.txt", "w");
+        in_file = $fopen("C:\\Users\\joaop\\energetic_efficiency\\energetic_efficiency.srcs\\sim_1\\new\\data\\8bits_entries.txt", "r");
+        out_file = $fopen("C:\\Users\\joaop\\energetic_efficiency\\energetic_efficiency.srcs\\sim_1\\new\\results\\carry_lookahead_adder\\cla_results_8bits.txt", "w");
 
         cin = 0;
 

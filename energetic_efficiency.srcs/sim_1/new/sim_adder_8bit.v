@@ -7,8 +7,7 @@ module sim_adder_8bit;
     wire [7:0] sum;
     wire cout;
 
-    integer file_in, file_out;
-    integer scan_file;
+    integer in_file, out_file;
 
     adder_8bit dut (
         .a(a),
@@ -19,26 +18,24 @@ module sim_adder_8bit;
     );
 
     initial begin
+
+        in_file = $fopen("C:\\Users\\joaop\\energetic_efficiency\\energetic_efficiency.srcs\\sim_1\\new\\data\\8bits_entries.txt", "r");
+        out_file = $fopen("C:\\Users\\joaop\\energetic_efficiency\\energetic_efficiency.srcs\\sim_1\\new\\results\\ripple_carry_adder\\ripple_results_8bits.txt", "w");
+
         cin = 0;
 
-        file_in = $fopen("dados_8bits.txt", "r");
-        if (file_in == 0) begin
-            $display("Erro: não foi possível abrir arquivo de entrada.");
-            $finish;
+        while(!$feof(in_file)) begin
+            $fscanf(in_file, "%h %h\n", a, b);
+
+            #1;
+
+            $fwrite(out_file, "%h %b\n", sum, cout);
         end
 
-        file_out = $fopen("resultados_8bits.txt", "w");
+        $fclose(in_file);
+        $fclose(out_file);
 
-        while (!$feof(file_in)) begin
-            scan_file = $fscanf(file_in, "%h %h\n", a, b);
-            #10;
-            $fwrite(file_out, "%02h + %02h = %02h (Cout=%b)\n", a, b, sum, cout);
-        end
-
-        $fclose(file_in);
-        $fclose(file_out);
-
-        $display("Simulação finalizada. Resultados salvos em resultados_8bits.txt.");
+        $display("Simulação finalizada com sucesso!");
         $finish;
     end
 

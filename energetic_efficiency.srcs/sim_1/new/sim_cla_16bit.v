@@ -1,6 +1,6 @@
 `timescale 1ps/1ps
 
-module sim_adder_16bit;
+module sim_cla_16bit;
 
     reg  [15:0] a, b;
     reg cin;
@@ -9,7 +9,7 @@ module sim_adder_16bit;
 
     integer in_file, out_file;
 
-    adder_16bit DUT (
+    cla_16bit DUT (
         .a(a),
         .b(b),
         .cin(cin),
@@ -20,7 +20,7 @@ module sim_adder_16bit;
     initial begin
 
         in_file = $fopen("C:\\Users\\joaop\\energetic_efficiency\\energetic_efficiency.srcs\\sim_1\\new\\data\\dados_16bits_uniforme.txt", "r");
-        out_file = $fopen("C:\\Users\\joaop\\energetic_efficiency\\energetic_efficiency.srcs\\sim_1\\new\\results\\ripple_carry_adder\\ripple_results_16bits.txt", "w");
+        out_file = $fopen("C:\\Users\\joaop\\energetic_efficiency\\energetic_efficiency.srcs\\sim_1\\new\\results\\carry_lookahead_adder\\cla_results_16bits.txt", "w");
 
         cin = 0;
 
