@@ -22,6 +22,7 @@ def extract_float(line):
 def parse_resource(filepath):
     lut = ""
     reg = ""
+    dsp = ""
 
     with open(filepath, "r") as f:
         for line in f:
@@ -37,7 +38,13 @@ def parse_resource(filepath):
                 if len(cols) > 2 and cols[2].isdigit():
                     reg = int(cols[2])
 
-    return lut, reg
+            #Slice DSP
+            elif "DSPs" in line and "|" in line:
+                cols = [c.strip() for c in line.split("|")]
+                if len(cols) > 2 and cols[2].isdigit():
+                    dsp = int(cols[2])
+
+    return lut, reg, dsp
 
 
 def parse_power(filepath):
@@ -81,9 +88,10 @@ def main():
 
         # Resource report
         if "_resource.rpt" in filename:
-            lut, reg = parse_resource(filepath)
+            lut, reg, dsp = parse_resource(filepath)
             experiments[base]["lut"] = lut
             experiments[base]["reg"] = reg
+            experiments[base]["dsp"] = dsp
 
         # Power report
         elif "_power.rpt" in filename:
@@ -103,6 +111,7 @@ def main():
             "experiment",
             "Slice LUTs",
             "Slice Registers",
+            "Slice DSPs",
             "Total Power (W)",
             "Dynamic Power (W)",
             "Static Power (W)"
@@ -115,6 +124,7 @@ def main():
                 exp,
                 e.get("lut", ""),
                 e.get("reg", ""),
+                e.get("dsp", ""),
                 e.get("total", ""),
                 e.get("dynamic", ""),
                 e.get("static", "")

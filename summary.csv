@@ -1,3 +1,15 @@
-experiment,Slice LUTs,Slice Registers,Total Power (W),Dynamic Power (W),Static Power (W)
-sim_exact_8bit,68,0,0.081,0.011,0.07
-sim_exact_8bit_simple,70,0,0.081,0.011,0.07
+experiment,Slice LUTs,Slice Registers,Slice DSPs,Total Power (W),Dynamic Power (W),Static Power (W)
+sim_exact_16bit_exponential,274,0,0,0.095,0.024,0.07
+sim_exact_16bit_normal,274,0,0,0.098,0.028,0.07
+sim_exact_16bit_simple_exponential,0,0,1,0.091,0.02,0.07
+sim_exact_16bit_simple_normal,0,0,1,0.094,0.023,0.07
+sim_exact_16bit_simple_uniform,0,0,1,0.094,0.024,0.07
+sim_exact_16bit_uniform,274,0,0,0.099,0.028,0.07
+sim_exact_32bit_exponential,1070,0,0,0.136,0.066,0.07
+sim_exact_32bit_normal,1070,0,0,0.142,0.072,0.07
+sim_exact_32bit_simple_exponential,47,0,4,0.119,0.048,0.07
+sim_exact_32bit_simple_normal,47,0,4,0.122,0.052,0.07
+sim_exact_32bit_simple_uniform,47,0,4,0.122,0.052,0.07
+sim_exact_32bit_uniform,1070,0,0,0.142,0.072,0.07
+sim_exact_8bit,68,0,0,0.081,0.011,0.07
+sim_exact_8bit_simple,70,0,0,0.081,0.011,0.07

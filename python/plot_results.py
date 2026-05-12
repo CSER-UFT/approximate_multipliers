@@ -69,6 +69,7 @@ with open(INPUT_CSV, "r") as f:
 
         lut = int(row["Slice LUTs"])
         reg = int(row["Slice Registers"])
+        dsp = int(row["Slice DSPs"])
         dyn = float(row["Dynamic Power (W)"])
         sta = float(row["Static Power (W)"])
         total = dyn + sta
@@ -76,6 +77,7 @@ with open(INPUT_CSV, "r") as f:
         data[tipo][bits] = {
             "lut": lut,
             "reg": reg,
+            "dsp": dsp,
             "dynamic": dyn,
             "static": sta,
             "total": total
@@ -95,6 +97,7 @@ plot_bar(data, "static", "Power (W)", "Static Power Comparison", "power_static.p
 
 plot_bar(data, "lut", "Slice LUTs", "LUT Usage Comparison", "lut_comparison.pdf")
 plot_bar(data, "reg", "Slice Registers", "Register Usage Comparison", "register_comparison.pdf")
+plot_bar(data, "dsp", "Slice DSPs", "DSP Usage Comparison", "DSP_comparison.pdf")
 
 # Eficiência energética (W/bit)
 for tipo in data:
