@@ -37,8 +37,7 @@ module sim_exact_8bit_simple;
 
         $display("Simulação iniciada: operador *");
 
-        while (!$feof(in_file)) begin
-            r = $fscanf(in_file, "%h %h\n", a, b);
+        while ($fscanf(in_file, "%h %h", a, b) == 2) begin
             
             #10;
 

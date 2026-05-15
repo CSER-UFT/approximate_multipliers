@@ -43,10 +43,10 @@ set_property source_mgmt_mode None [current_project]
 # add_files "$SRC_DIR/exact_8bit_simple.v"
 # add_files "$SRC_DIR/sim_exact_8bit.v"
 # add_files "$SRC_DIR/sim_exact_8bit_simple.v"
-add_files "$SRC_DIR/exact_16bit.v"
-add_files "$SRC_DIR/exact_16bit_simple.v"
-add_files "$SRC_DIR/exact_32bit.v"
-add_files "$SRC_DIR/exact_32bit_simple.v"
+# add_files "$SRC_DIR/exact_16bit.v"
+# add_files "$SRC_DIR/exact_16bit_simple.v"
+# add_files "$SRC_DIR/exact_32bit.v"
+# add_files "$SRC_DIR/exact_32bit_simple.v"
 # add_files "$SRC_DIR/sim_exact_16bit_exponential.v"
 # add_files "$SRC_DIR/sim_exact_16bit_normal.v"
 # add_files "$SRC_DIR/sim_exact_16bit_uniform.v"
@@ -61,25 +61,30 @@ add_files "$SRC_DIR/exact_32bit_simple.v"
 # add_files "$SRC_DIR/sim_exact_32bit_simple_uniform.v"
 
 # Testbench atual
-add_files -fileset sim_1 "$SRC_DIR/${TB_NAME}.v"
+# add_files -fileset sim_1 "$SRC_DIR/${TB_NAME}.v"
 
 # ==============================
 # Define TOP de síntese (genérico)
 # ==============================
 set name_no_sim [string range $TB_NAME 4 end]
 
-# Casos:
-# sim_exact_16bit_exponential
-# -> exact_16bit
-#
-# sim_exact_16bit_simple_exponential
-# -> exact_16bit_simple
 
-if {[string match "*simple*" $name_no_sim]} {
-    regexp {(exact_[0-9]+bit_simple)} $name_no_sim -> DESIGN_TOP
-} else {
-    regexp {(exact_[0-9]+bit)} $name_no_sim -> DESIGN_TOP
-}
+regsub {_(normal|uniform|exponential)$} $name_no_sim "" DESIGN_TOP
+
+puts "TB_NAME    = $TB_NAME"
+puts "DESIGN_TOP = $DESIGN_TOP"
+
+
+# ==============================
+# Adiciona SOMENTE os arquivos necessários
+# ==============================
+
+# Arquitetura DUT
+add_files "$SRC_DIR/${DESIGN_TOP}.v"
+
+# Testbench atual
+add_files -fileset sim_1 "$SRC_DIR/${TB_NAME}.v"
+
 
 set_property top $DESIGN_TOP [get_filesets sources_1]
 set_property top $TB_NAME    [get_filesets sim_1]
@@ -117,12 +122,11 @@ restart
 
 open_saif $SAIF_FILE
 
-log_saif [get_objects -r /$TB_NAME/*]
+log_saif [get_objects -r /$TB_NAME/dut/*]
 
 run all
 
 close_saif
-close_sim
 
 puts ">>> SAIF gerado: $SAIF_FILE"
 

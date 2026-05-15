@@ -19,8 +19,8 @@ module sim_exact_16bit_uniform;
     );
 
     // Caminhos
-    reg [1023:0] input_file  = "/home/jeova.barbosa/approximate_multipliers/data/16_uniform.txt";
-    reg [1023:0] output_file = "/home/jeova.barbosa/approximate_multipliers/resultados/exact_16bit_uniform.txt";
+    reg [1023:0] input_file  = "../data/16_uniform.txt";
+    reg [1023:0] output_file = "../resultados/exact_16bit_uniform.txt";
     
     initial begin
         in_file  = $fopen(input_file, "r");
@@ -37,8 +37,7 @@ module sim_exact_16bit_uniform;
 
         $display("Simulação iniciada: multiplicador manual 16_uniform");
 
-        while (!$feof(in_file)) begin
-            r = $fscanf(in_file, "%h %h\n", a, b);
+        while ($fscanf(in_file, "%h %h", a, b) == 2) begin
             
             #10;
 

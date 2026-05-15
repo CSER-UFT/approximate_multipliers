@@ -14,18 +14,13 @@ RUN_TCL = $(TCL_DIR)/sim.tcl
 
 # Lista de experimentos (testbenches)
 EXPERIMENTS = \
-	sim_exact_16bit_exponential \
-	sim_exact_16bit_normal \
-	sim_exact_16bit_uniform \
-	sim_exact_16bit_simple_exponential \
-	sim_exact_16bit_simple_normal \
-	sim_exact_16bit_simple_uniform \
-	sim_exact_32bit_exponential \
-	sim_exact_32bit_normal \
-	sim_exact_32bit_uniform \
-	sim_exact_32bit_simple_exponential \
-	sim_exact_32bit_simple_normal \
-	sim_exact_32bit_simple_uniform
+	sim_radix4_booth_8bit \
+	sim_radix4_booth_16bit_exponential \
+	sim_radix4_booth_16bit_normal \
+	sim_radix4_booth_16bit_uniform \
+	sim_radix4_booth_32bit_exponential \
+	sim_radix4_booth_32bit_normal \
+	sim_radix4_booth_32bit_uniform
 
 
 

@@ -1,6 +1,7 @@
 import csv
 import re
 import matplotlib.pyplot as plt
+from matplotlib.ticker import MaxNLocator
 from collections import defaultdict
 import os
 
@@ -24,6 +25,8 @@ def classify(exp_name):
     """
     if "simple" in exp_name:
         tipo = "simple"
+    elif "radix" in exp_name:
+        tipo = "radix"
     else:
         tipo = "exato"
 
@@ -32,22 +35,28 @@ def classify(exp_name):
     return tipo, bits
 
 def plot_bar(data_dict, metric_key, y_label, title, filename):
-    """Gera gráfico de barras comparando exato e simples por largura de bit"""
+    """Gera gráfico de barras comparando exato, simples e radix por largura de bit"""
     plt.figure()
     bit_sizes = sorted({b for t in data_dict for b in data_dict[t]})
     x = range(len(bit_sizes))
-    width = 0.35
+    width = 0.25
 
     exato_vals = [data_dict["exato"].get(b, {}).get(metric_key, 0) for b in bit_sizes]
     simples_vals = [data_dict["simple"].get(b, {}).get(metric_key, 0) for b in bit_sizes]
+    radix_vals = [data_dict["radix"].get(b, {}).get(metric_key, 0) for b in bit_sizes]
 
-    plt.bar([i - width/2 for i in x], exato_vals, width=width, label="EXATO")
-    plt.bar([i + width/2 for i in x], simples_vals, width=width, label="SIMPLES")
+    plt.bar([i - width for i in x], exato_vals, width=width, label="MANUAL")
+    plt.bar([i for i in x], simples_vals, width=width, label="OPERADOR *")
+    plt.bar([i + width for i in x], radix_vals, width=width, label="RADIX-4")
 
     plt.xticks(x, [f"{b}-bit" for b in bit_sizes])
     plt.ylabel(y_label)
     plt.title(title)
     plt.legend()
+
+    if metric_key == "dsp":
+        plt.gca().yaxis.set_major_locator(MaxNLocator(integer=True))
+
     plt.tight_layout()
     filepath = os.path.join(PLOT_DIR, filename)
     plt.savefig(filepath)
@@ -72,7 +81,7 @@ with open(INPUT_CSV, "r") as f:
         dsp = int(row["Slice DSPs"])
         dyn = float(row["Dynamic Power (W)"])
         sta = float(row["Static Power (W)"])
-        total = dyn + sta
+        total = sta + dyn
 
         data[tipo][bits] = {
             "lut": lut,
