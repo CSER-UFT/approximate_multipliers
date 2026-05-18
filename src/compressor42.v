@@ -1,3 +1,5 @@
+`timescale 1ns / 1ps
+
 module compressor42(
     input  a,
     input  b,

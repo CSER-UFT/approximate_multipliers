@@ -27,6 +27,8 @@ def classify(exp_name):
         tipo = "simple"
     elif "radix" in exp_name:
         tipo = "radix"
+    elif "compressor42" in exp_name:
+        tipo = "compressor"
     else:
         tipo = "exato"
 
@@ -39,20 +41,22 @@ def plot_bar(data_dict, metric_key, y_label, title, filename):
     plt.figure()
     bit_sizes = sorted({b for t in data_dict for b in data_dict[t]})
     x = range(len(bit_sizes))
-    width = 0.25
+    width = 0.20
 
     exato_vals = [data_dict["exato"].get(b, {}).get(metric_key, 0) for b in bit_sizes]
     simples_vals = [data_dict["simple"].get(b, {}).get(metric_key, 0) for b in bit_sizes]
     radix_vals = [data_dict["radix"].get(b, {}).get(metric_key, 0) for b in bit_sizes]
+    compressor_vals = [data_dict["compressor"].get(b, {}).get(metric_key, 0) for b in bit_sizes]
 
-    plt.bar([i - width for i in x], exato_vals, width=width, label="MANUAL")
-    plt.bar([i for i in x], simples_vals, width=width, label="OPERADOR *")
+    plt.bar([i - width for i in x], exato_vals, width=width, label="EXATO ESTRUTURAL")
+    plt.bar([i for i in x], simples_vals, width=width, label="EXATO FUNCIONAL")
     plt.bar([i + width for i in x], radix_vals, width=width, label="RADIX-4")
+    plt.bar([i + + width + width for i in x], compressor_vals, width=width, label="COMPRESSOR 4:2")
 
     plt.xticks(x, [f"{b}-bit" for b in bit_sizes])
     plt.ylabel(y_label)
     plt.title(title)
-    plt.legend()
+    plt.legend(fontsize=8.5)
 
     if metric_key == "dsp":
         plt.gca().yaxis.set_major_locator(MaxNLocator(integer=True))
@@ -96,23 +100,23 @@ with open(INPUT_CSV, "r") as f:
 # GRÁFICOS DE ENERGIA
 # =========================================================
 
-plot_bar(data, "total", "Power (W)", "Total Power Comparison", "power_total.pdf")
-plot_bar(data, "dynamic", "Power (W)", "Dynamic Power Comparison", "power_dynamic.pdf")
-plot_bar(data, "static", "Power (W)", "Static Power Comparison", "power_static.pdf")
+plot_bar(data, "total", "Potência (W)", "Comparação de Potência Total", "potencia_total.pdf")
+plot_bar(data, "dynamic", "Potência (W)", "Comparação de Potência Dinâmica", "potencia_dinamica.pdf")
+plot_bar(data, "static", "Potência (W)", "Comparação de Potência Estática", "potencia_estatica.pdf")
 
 # =========================================================
 # GRÁFICOS DE LUTs, Registers e Eficiência
 # =========================================================
 
-plot_bar(data, "lut", "Slice LUTs", "LUT Usage Comparison", "lut_comparison.pdf")
-plot_bar(data, "reg", "Slice Registers", "Register Usage Comparison", "register_comparison.pdf")
-plot_bar(data, "dsp", "Slice DSPs", "DSP Usage Comparison", "DSP_comparison.pdf")
+plot_bar(data, "lut", "Quantidade de LUTs", "Comparação de uso de LUTs", "comparacao_lut.pdf")
+plot_bar(data, "reg", "Quantidade de Registradores", "Comparação de uso de Registradores", "comparacao_registradores.pdf")
+plot_bar(data, "dsp", "Quantidade de Blocos DSP", "Comparação de uso de Blocos DSP", "comparacao_dsp.pdf")
 
 # Eficiência energética (W/bit)
 for tipo in data:
     for b in data[tipo]:
         data[tipo][b]["efficiency"] = data[tipo][b]["total"] / b if b != 0 else 0
 
-plot_bar(data, "efficiency", "Power per bit (W/bit)", "Energy Efficiency", "efficiency.pdf")
+plot_bar(data, "efficiency", "Potência por bit (W/bit)", "Eficiência Energética (menor = melhor)", "eficiencia.pdf")
 
 print("Todos os gráficos gerados na pasta ./plots")

@@ -1,7 +1,7 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
 -----------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version     : Vivado v.2022.2 (lin64) Build 3671981 Fri Oct 14 04:59:54 MDT 2022
-| Date             : Thu May 14 12:55:42 2026
+| Date             : Mon May 18 10:56:19 2026
 | Host             : sarue running 64-bit Ubuntu 20.04.6 LTS
 | Command          : report_power -file /home/jeova.barbosa/approximate_multipliers/resultados/sim_radix4_booth_32bit_normal_power.rpt
 | Design           : radix4_booth_32bit
@@ -30,10 +30,10 @@ Table of Contents
 ----------
 
 +--------------------------+-------------------------------------------------------------------------------------------+
-| Total On-Chip Power (W)  | 0.155                                                                                     |
+| Total On-Chip Power (W)  | 0.152                                                                                     |
 | Design Power Budget (W)  | Unspecified*                                                                              |
 | Power Budget Margin (W)  | NA                                                                                        |
-| Dynamic (W)              | 0.084                                                                                     |
+| Dynamic (W)              | 0.082                                                                                     |
 | Device Static (W)        | 0.070                                                                                     |
 | Effective TJA (C/W)      | 4.9                                                                                       |
 | Max Ambient (C)          | 84.2                                                                                      |
@@ -41,7 +41,7 @@ Table of Contents
 | Confidence Level         | Medium                                                                                    |
 | Setting File             | ---                                                                                       |
 | Simulation Activity File | /home/jeova.barbosa/approximate_multipliers/resultados/sim_radix4_booth_32bit_normal.saif |
-| Design Nets Matched      | 5%   (162/3075)                                                                           |
+| Design Nets Matched      | 5%   (162/3136)                                                                           |
 +--------------------------+-------------------------------------------------------------------------------------------+
 * Specify Design Power Budget using, set_operating_conditions -design_power_budget <value in Watts>
 
@@ -53,14 +53,14 @@ Table of Contents
 | On-Chip        | Power (W) | Used     | Available | Utilization (%) |
 +----------------+-----------+----------+-----------+-----------------+
 | Clocks         |     0.000 |        3 |       --- |             --- |
-| Slice Logic    |     0.019 |     2018 |       --- |             --- |
-|   LUT as Logic |     0.018 |     1625 |     32600 |            4.98 |
-|   CARRY4       |     0.001 |      234 |      8150 |            2.87 |
+| Slice Logic    |     0.019 |     2045 |       --- |             --- |
+|   LUT as Logic |     0.018 |     1565 |     32600 |            4.80 |
+|   CARRY4       |     0.001 |      244 |      8150 |            2.99 |
 |   Others       |     0.000 |        2 |       --- |             --- |
-| Signals        |     0.020 |     2073 |       --- |             --- |
+| Signals        |     0.018 |     2093 |       --- |             --- |
 | I/O            |     0.045 |      128 |       210 |           60.95 |
 | Static Power   |     0.070 |          |           |                 |
-| Total          |     0.155 |          |           |                 |
+| Total          |     0.152 |          |           |                 |
 +----------------+-----------+----------+-----------+-----------------+
 
 
@@ -70,7 +70,7 @@ Table of Contents
 +-----------+-------------+-----------+-------------+------------+-------------+-------------+------------+
 | Source    | Voltage (V) | Total (A) | Dynamic (A) | Static (A) | Powerup (A) | Budget (A)  | Margin (A) |
 +-----------+-------------+-----------+-------------+------------+-------------+-------------+------------+
-| Vccint    |       1.000 |     0.049 |       0.040 |      0.010 |       NA    | Unspecified | NA         |
+| Vccint    |       1.000 |     0.047 |       0.038 |      0.010 |       NA    | Unspecified | NA         |
 | Vccaux    |       1.800 |     0.016 |       0.004 |      0.013 |       NA    | Unspecified | NA         |
 | Vcco33    |       3.300 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
 | Vcco25    |       2.500 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
@@ -135,7 +135,7 @@ Table of Contents
 +--------------------+-----------+
 | Name               | Power (W) |
 +--------------------+-----------+
-| radix4_booth_32bit |     0.084 |
+| radix4_booth_32bit |     0.082 |
 +--------------------+-----------+
 
 

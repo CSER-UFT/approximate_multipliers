@@ -1,3 +1,5 @@
+`timescale 1ns / 1ps
+
 module compressor42_32bit(
     input  [31:0] a,
     input  [31:0] b,

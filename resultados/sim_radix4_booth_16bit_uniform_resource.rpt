@@ -1,7 +1,7 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
 ---------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2022.2 (lin64) Build 3671981 Fri Oct 14 04:59:54 MDT 2022
-| Date         : Thu May 14 12:47:45 2026
+| Date         : Mon May 18 10:48:16 2026
 | Host         : sarue running 64-bit Ubuntu 20.04.6 LTS
 | Command      : report_utilization -file /home/jeova.barbosa/approximate_multipliers/resultados/sim_radix4_booth_16bit_uniform_resource.rpt
 | Design       : radix4_booth_16bit
@@ -69,13 +69,13 @@ Table of Contents
 +------------------------------------------+------+-------+------------+-----------+-------+
 |                 Site Type                | Used | Fixed | Prohibited | Available | Util% |
 +------------------------------------------+------+-------+------------+-----------+-------+
-| Slice                                    |  117 |     0 |          0 |      8150 |  1.44 |
+| Slice                                    |  119 |     0 |          0 |      8150 |  1.46 |
 |   SLICEL                                 |   76 |     0 |            |           |       |
-|   SLICEM                                 |   41 |     0 |            |           |       |
+|   SLICEM                                 |   43 |     0 |            |           |       |
 | LUT as Logic                             |  407 |     0 |          0 |     32600 |  1.25 |
 |   using O5 output only                   |    0 |       |            |           |       |
-|   using O6 output only                   |  363 |       |            |           |       |
-|   using O5 and O6                        |   44 |       |            |           |       |
+|   using O6 output only                   |  353 |       |            |           |       |
+|   using O5 and O6                        |   54 |       |            |           |       |
 | LUT as Memory                            |    0 |     0 |          0 |      9600 |  0.00 |
 |   LUT as Distributed RAM                 |    0 |     0 |            |           |       |
 |   LUT as Shift Register                  |    0 |     0 |            |           |       |
@@ -173,14 +173,14 @@ Table of Contents
 +----------+------+---------------------+
 | Ref Name | Used | Functional Category |
 +----------+------+---------------------+
-| LUT6     |  187 |                 LUT |
-| LUT4     |  156 |                 LUT |
-| CARRY4   |   58 |          CarryLogic |
-| LUT3     |   55 |                 LUT |
-| LUT5     |   43 |                 LUT |
+| LUT4     |  176 |                 LUT |
+| LUT6     |  166 |                 LUT |
+| LUT3     |   70 |                 LUT |
+| CARRY4   |   66 |          CarryLogic |
+| LUT5     |   38 |                 LUT |
 | OBUF     |   32 |                  IO |
 | IBUF     |   32 |                  IO |
-| LUT2     |   10 |                 LUT |
+| LUT2     |   11 |                 LUT |
 +----------+------+---------------------+
 
 

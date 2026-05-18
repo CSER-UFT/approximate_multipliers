@@ -19,8 +19,8 @@ module sim_radix4_booth_8bit;
     );
 
     // Caminhos
-    reg [1023:0] input_file  = "../data/8bits_entries.txt";
-    reg [1023:0] output_file = "../resultados/radix4_8bit.txt";
+    reg [1023:0] input_file  = "/home/jeova.barbosa/approximate_multipliers/data/8bits_entries.txt";
+    reg [1023:0] output_file = "/home/jeova.barbosa/approximate_multipliers/resultados/radix4_8bit.txt";
     
     initial begin
         in_file  = $fopen(input_file, "r");

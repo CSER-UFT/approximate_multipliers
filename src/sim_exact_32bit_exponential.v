@@ -19,8 +19,8 @@ module sim_exact_32bit_exponential;
     );
 
     // Caminhos
-    reg [1023:0] input_file  = "../data/32_exponential.txt";
-    reg [1023:0] output_file = "../resultados/exact_32bit_exponential.txt";
+    reg [1023:0] input_file  = "/home/jeova.barbosa/approximate_multipliers/data/32_exponential.txt";
+    reg [1023:0] output_file = "/home/jeova.barbosa/approximate_multipliers/resultados/exact_32bit_exponential.txt";
     
     initial begin
         in_file  = $fopen(input_file, "r");

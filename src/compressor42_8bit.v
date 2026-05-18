@@ -1,3 +1,5 @@
+`timescale 1ns / 1ps
+
 module compressor42_8bit(
     input  [7:0] a,
     input  [7:0] b,

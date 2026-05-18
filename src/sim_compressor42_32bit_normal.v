@@ -19,8 +19,8 @@ module sim_compressor42_32bit_normal;
     );
 
     // Caminhos
-    reg [1023:0] input_file  = "../data/32_normal.txt";
-    reg [1023:0] output_file = "../resultados/compressor42_32bit_normal.txt";
+    reg [1023:0] input_file  = "/home/jeova.barbosa/approximate_multipliers/data/32_normal.txt";
+    reg [1023:0] output_file = "/home/jeova.barbosa/approximate_multipliers/resultados/compressor42_32bit_normal.txt";
     
     initial begin
         in_file  = $fopen(input_file, "r");
