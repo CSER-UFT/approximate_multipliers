@@ -58,7 +58,7 @@ set_property source_mgmt_mode None [current_project]
 # add_files "$SRC_DIR/sim_exact_32bit_uniform.v"
 # add_files "$SRC_DIR/sim_exact_32bit_simple_exponential.v"
 # add_files "$SRC_DIR/sim_exact_32bit_simple_normal.v"
-# add_files "$SRC_DIR/sim_exact_32bit_simple_uniform.v"
+add_files "$SRC_DIR/compressor42.v"
 
 # Testbench atual
 # add_files -fileset sim_1 "$SRC_DIR/${TB_NAME}.v"

@@ -57,12 +57,14 @@ def parse_filename(filename):
     else:
         dist = "default"
         
-    if "compressor42" in name:
-        m_type = "compressor42"
-    elif "radix4" in name:
-        m_type = "radix4"
+    if "radix4_compressor" in name:
+        m_type = "radix4_compressor"
     elif "simple" in name:
-        m_type = "exact_simple"
+        m_type = "simple"
+    elif "radix" in name:
+        m_type = "radix"
+    elif "compressor42" in name:
+        m_type = "compressor"
     else:
         m_type = "exact"
         

@@ -20,10 +20,12 @@ os.makedirs(PLOT_DIR, exist_ok=True)
 def classify(exp_name):
     """
     Extrai:
-    - tipo: exato / simples
-    - bits: 8 (por enquanto)
+    - tipo: exato / simples / radix / compressor / radix4_compressor
+    - bits: largura de bit
     """
-    if "simple" in exp_name:
+    if "radix4_compressor" in exp_name:
+        tipo = "radix4_compressor"
+    elif "simple" in exp_name:
         tipo = "simple"
     elif "radix" in exp_name:
         tipo = "radix"
@@ -37,26 +39,33 @@ def classify(exp_name):
     return tipo, bits
 
 def plot_bar(data_dict, metric_key, y_label, title, filename):
-    """Gera gráfico de barras comparando exato, simples e radix por largura de bit"""
-    plt.figure()
+    """Gera gráfico de barras comparando os tipos por largura de bit"""
+    plt.figure(figsize=(10, 6))
     bit_sizes = sorted({b for t in data_dict for b in data_dict[t]})
     x = range(len(bit_sizes))
-    width = 0.20
+    width = 0.15
 
-    exato_vals = [data_dict["exato"].get(b, {}).get(metric_key, 0) for b in bit_sizes]
-    simples_vals = [data_dict["simple"].get(b, {}).get(metric_key, 0) for b in bit_sizes]
-    radix_vals = [data_dict["radix"].get(b, {}).get(metric_key, 0) for b in bit_sizes]
-    compressor_vals = [data_dict["compressor"].get(b, {}).get(metric_key, 0) for b in bit_sizes]
+    # Função para obter média dos valores se for uma lista, ou o valor direto
+    def get_val(t, b, k):
+        vals = data_dict.get(t, {}).get(b, {}).get(k, [0])
+        return sum(vals) / len(vals) if vals else 0
 
-    plt.bar([i - width for i in x], exato_vals, width=width, label="EXATO ESTRUTURAL")
-    plt.bar([i for i in x], simples_vals, width=width, label="EXATO FUNCIONAL")
-    plt.bar([i + width for i in x], radix_vals, width=width, label="RADIX-4")
-    plt.bar([i + + width + width for i in x], compressor_vals, width=width, label="COMPRESSOR 4:2")
+    exato_vals = [get_val("exato", b, metric_key) for b in bit_sizes]
+    simples_vals = [get_val("simple", b, metric_key) for b in bit_sizes]
+    radix_vals = [get_val("radix", b, metric_key) for b in bit_sizes]
+    compressor_vals = [get_val("compressor", b, metric_key) for b in bit_sizes]
+    radix_compressor_vals = [get_val("radix4_compressor", b, metric_key) for b in bit_sizes]
+
+    plt.bar([i - 2*width for i in x], exato_vals, width=width, label="EXATO ESTRUTURAL")
+    plt.bar([i - width for i in x], simples_vals, width=width, label="EXATO FUNCIONAL")
+    plt.bar([i for i in x], radix_vals, width=width, label="RADIX-4")
+    plt.bar([i + width for i in x], compressor_vals, width=width, label="COMPRESSOR 4:2")
+    plt.bar([i + 2*width for i in x], radix_compressor_vals, width=width, label="RADIX + COMPRESSOR")
 
     plt.xticks(x, [f"{b}-bit" for b in bit_sizes])
     plt.ylabel(y_label)
     plt.title(title)
-    plt.legend(fontsize=8.5)
+    plt.legend(fontsize=9, loc='upper left', bbox_to_anchor=(1, 1))
 
     if metric_key == "dsp":
         plt.gca().yaxis.set_major_locator(MaxNLocator(integer=True))
@@ -71,8 +80,8 @@ def plot_bar(data_dict, metric_key, y_label, title, filename):
 # Leitura e organização
 # =========================================================
 
-data = defaultdict(lambda: defaultdict(dict))
-# data[tipo][bits] = {metrics}
+# data[tipo][bits][metrica] = list of values (to be averaged)
+data = defaultdict(lambda: defaultdict(lambda: defaultdict(list)))
 
 with open(INPUT_CSV, "r") as f:
     reader = csv.DictReader(f)
@@ -80,24 +89,18 @@ with open(INPUT_CSV, "r") as f:
         exp = row["experiment"]
         tipo, bits = classify(exp)
 
-        lut = int(row["Slice LUTs"])
-        reg = int(row["Slice Registers"])
-        dsp = int(row["Slice DSPs"])
+        data[tipo][bits]["lut"].append(int(row["Slice LUTs"]))
+        data[tipo][bits]["reg"].append(int(row["Slice Registers"]))
+        data[tipo][bits]["dsp"].append(int(row["Slice DSPs"]))
+        
         dyn = float(row["Dynamic Power (W)"])
         sta = float(row["Static Power (W)"])
-        total = sta + dyn
-
-        data[tipo][bits] = {
-            "lut": lut,
-            "reg": reg,
-            "dsp": dsp,
-            "dynamic": dyn,
-            "static": sta,
-            "total": total
-        }
+        data[tipo][bits]["dynamic"].append(dyn)
+        data[tipo][bits]["static"].append(sta)
+        data[tipo][bits]["total"].append(sta + dyn)
 
 # =========================================================
-# GRÁFICOS DE ENERGIA
+# GRÁFICOS
 # =========================================================
 
 plot_bar(data, "total", "Potência (W)", "Comparação de Potência Total", "potencia_total.pdf")
@@ -112,11 +115,16 @@ plot_bar(data, "lut", "Quantidade de LUTs", "Comparação de uso de LUTs", "comp
 plot_bar(data, "reg", "Quantidade de Registradores", "Comparação de uso de Registradores", "comparacao_registradores.pdf")
 plot_bar(data, "dsp", "Quantidade de Blocos DSP", "Comparação de uso de Blocos DSP", "comparacao_dsp.pdf")
 
-# Eficiência energética (W/bit)
+# Eficiência energética (W/bit) - calculada sobre a média do total
 for tipo in data:
     for b in data[tipo]:
-        data[tipo][b]["efficiency"] = data[tipo][b]["total"] / b if b != 0 else 0
+        if b != 0:
+            avg_total = sum(data[tipo][b]["total"]) / len(data[tipo][b]["total"])
+            data[tipo][b]["efficiency"] = [avg_total / b]
+        else:
+            data[tipo][b]["efficiency"] = [0]
 
 plot_bar(data, "efficiency", "Potência por bit (W/bit)", "Eficiência Energética (menor = melhor)", "eficiencia.pdf")
+
 
 print("Todos os gráficos gerados na pasta ./plots")

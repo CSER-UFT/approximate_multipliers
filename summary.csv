@@ -4,7 +4,7 @@ sim_compressor42_16bit_normal,288,0,0,0.107,0.036,0.07
 sim_compressor42_16bit_uniform,288,0,0,0.107,0.037,0.07
 sim_compressor42_32bit_exponential,1081,0,0,0.151,0.081,0.07
 sim_compressor42_32bit_normal,1081,0,0,0.157,0.087,0.07
-sim_compressor42_32bit_uniform,1081,0,0,0.157,0.087,0.07
+sim_compressor42_32bit_uniform,1081,0,0,0.158,0.087,0.07
 sim_compressor42_8bit,66,0,0,0.082,0.012,0.07
 sim_exact_16bit_exponential,274,0,0,0.095,0.024,0.07
 sim_exact_16bit_normal,274,0,0,0.098,0.028,0.07
@@ -27,3 +27,10 @@ sim_radix4_booth_32bit_exponential,1565,0,0,0.147,0.077,0.07
 sim_radix4_booth_32bit_normal,1565,0,0,0.152,0.082,0.07
 sim_radix4_booth_32bit_uniform,1565,0,0,0.152,0.082,0.07
 sim_radix4_booth_8bit,88,0,0,0.081,0.011,0.07
+sim_radix4_compressor_16bit_exponential,473,0,0,0.105,0.034,0.07
+sim_radix4_compressor_16bit_normal,473,0,0,0.111,0.041,0.07
+sim_radix4_compressor_16bit_uniform,473,0,0,0.112,0.041,0.07
+sim_radix4_compressor_32bit_exponential,1730,0,0,0.178,0.108,0.07
+sim_radix4_compressor_32bit_normal,1730,0,0,0.189,0.119,0.07
+sim_radix4_compressor_32bit_uniform,1730,0,0,0.189,0.119,0.07
+sim_radix4_compressor_8bit,98,0,0,0.081,0.011,0.07
