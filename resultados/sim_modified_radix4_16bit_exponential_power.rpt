@@ -1,16 +1,16 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
----------------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version     : Vivado v.2022.2 (lin64) Build 3671981 Fri Oct 14 04:59:54 MDT 2022
-| Date             : Thu May 21 12:50:49 2026
+| Date             : Thu May 21 17:17:09 2026
 | Host             : sarue running 64-bit Ubuntu 20.04.6 LTS
-| Command          : report_power -file /home/jeova.barbosa/approximate_multipliers/resultados/sim_compressor42_8bit_power.rpt
-| Design           : compressor42_8bit
+| Command          : report_power -file /home/jeova.barbosa/approximate_multipliers/resultados/sim_modified_radix4_16bit_exponential_power.rpt
+| Design           : modified_radix4_16bit
 | Device           : xc7s50csga324-1
 | Design State     : routed
 | Grade            : commercial
 | Process          : typical
 | Characterization : Production
----------------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------------------------------------
 
 Power Report
 
@@ -29,20 +29,20 @@ Table of Contents
 1. Summary
 ----------
 
-+--------------------------+-----------------------------------------------------------------------------------+
-| Total On-Chip Power (W)  | 0.082                                                                             |
-| Design Power Budget (W)  | Unspecified*                                                                      |
-| Power Budget Margin (W)  | NA                                                                                |
-| Dynamic (W)              | 0.012                                                                             |
-| Device Static (W)        | 0.070                                                                             |
-| Effective TJA (C/W)      | 4.9                                                                               |
-| Max Ambient (C)          | 84.6                                                                              |
-| Junction Temperature (C) | 25.4                                                                              |
-| Confidence Level         | Medium                                                                            |
-| Setting File             | ---                                                                               |
-| Simulation Activity File | /home/jeova.barbosa/approximate_multipliers/resultados/sim_compressor42_8bit.saif |
-| Design Nets Matched      | 27%   (43/158)                                                                    |
-+--------------------------+-----------------------------------------------------------------------------------+
++--------------------------+---------------------------------------------------------------------------------------------------+
+| Total On-Chip Power (W)  | 0.097                                                                                             |
+| Design Power Budget (W)  | Unspecified*                                                                                      |
+| Power Budget Margin (W)  | NA                                                                                                |
+| Dynamic (W)              | 0.027                                                                                             |
+| Device Static (W)        | 0.070                                                                                             |
+| Effective TJA (C/W)      | 4.9                                                                                               |
+| Max Ambient (C)          | 84.5                                                                                              |
+| Junction Temperature (C) | 25.5                                                                                              |
+| Confidence Level         | Medium                                                                                            |
+| Setting File             | ---                                                                                               |
+| Simulation Activity File | /home/jeova.barbosa/approximate_multipliers/resultados/sim_modified_radix4_16bit_exponential.saif |
+| Design Nets Matched      | 8%   (64/852)                                                                                     |
++--------------------------+---------------------------------------------------------------------------------------------------+
 * Specify Design Power Budget using, set_operating_conditions -design_power_budget <value in Watts>
 
 
@@ -53,14 +53,14 @@ Table of Contents
 | On-Chip        | Power (W) | Used     | Available | Utilization (%) |
 +----------------+-----------+----------+-----------+-----------------+
 | Clocks         |     0.000 |        3 |       --- |             --- |
-| Slice Logic    |    <0.001 |       90 |       --- |             --- |
-|   LUT as Logic |    <0.001 |       66 |     32600 |            0.20 |
-|   CARRY4       |    <0.001 |        7 |      8150 |            0.09 |
+| Slice Logic    |     0.004 |      531 |       --- |             --- |
+|   LUT as Logic |     0.004 |      415 |     32600 |            1.27 |
+|   CARRY4       |    <0.001 |       66 |      8150 |            0.81 |
 |   Others       |     0.000 |        2 |       --- |             --- |
-| Signals        |    <0.001 |      101 |       --- |             --- |
-| I/O            |     0.010 |       32 |       210 |           15.24 |
+| Signals        |     0.004 |      555 |       --- |             --- |
+| I/O            |     0.019 |       64 |       210 |           30.48 |
 | Static Power   |     0.070 |          |           |                 |
-| Total          |     0.082 |          |           |                 |
+| Total          |     0.097 |          |           |                 |
 +----------------+-----------+----------+-----------+-----------------+
 
 
@@ -70,11 +70,11 @@ Table of Contents
 +-----------+-------------+-----------+-------------+------------+-------------+-------------+------------+
 | Source    | Voltage (V) | Total (A) | Dynamic (A) | Static (A) | Powerup (A) | Budget (A)  | Margin (A) |
 +-----------+-------------+-----------+-------------+------------+-------------+-------------+------------+
-| Vccint    |       1.000 |     0.011 |       0.001 |      0.010 |       NA    | Unspecified | NA         |
-| Vccaux    |       1.800 |     0.013 |       0.001 |      0.013 |       NA    | Unspecified | NA         |
+| Vccint    |       1.000 |     0.018 |       0.008 |      0.010 |       NA    | Unspecified | NA         |
+| Vccaux    |       1.800 |     0.014 |       0.002 |      0.013 |       NA    | Unspecified | NA         |
 | Vcco33    |       3.300 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
 | Vcco25    |       2.500 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
-| Vcco18    |       1.800 |     0.006 |       0.005 |      0.001 |       NA    | Unspecified | NA         |
+| Vcco18    |       1.800 |     0.010 |       0.009 |      0.001 |       NA    | Unspecified | NA         |
 | Vcco15    |       1.500 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
 | Vcco135   |       1.350 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
 | Vcco12    |       1.200 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
@@ -132,10 +132,10 @@ Table of Contents
 3.1 By Hierarchy
 ----------------
 
-+-------------------+-----------+
-| Name              | Power (W) |
-+-------------------+-----------+
-| compressor42_8bit |     0.012 |
-+-------------------+-----------+
++-----------------------+-----------+
+| Name                  | Power (W) |
++-----------------------+-----------+
+| modified_radix4_16bit |     0.027 |
++-----------------------+-----------+
 
 

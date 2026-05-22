@@ -1,14 +1,14 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
-------------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2022.2 (lin64) Build 3671981 Fri Oct 14 04:59:54 MDT 2022
-| Date         : Thu May 21 12:50:27 2026
+| Date         : Fri May 22 11:30:51 2026
 | Host         : sarue running 64-bit Ubuntu 20.04.6 LTS
-| Command      : report_utilization -file /home/jeova.barbosa/approximate_multipliers/resultados/sim_compressor42_8bit_resource.rpt
-| Design       : compressor42_8bit
+| Command      : report_utilization -file /home/jeova.barbosa/approximate_multipliers/resultados/sim_modified_radix4_32bit_exponential_resource.rpt
+| Design       : modified_radix4_32bit
 | Device       : xc7s50csga324-1
 | Speed File   : -1
 | Design State : Routed
-------------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------------------------------
 
 Utilization Design Information
 
@@ -32,8 +32,8 @@ Table of Contents
 +-------------------------+------+-------+------------+-----------+-------+
 |        Site Type        | Used | Fixed | Prohibited | Available | Util% |
 +-------------------------+------+-------+------------+-----------+-------+
-| Slice LUTs              |   66 |     0 |          0 |     32600 |  0.20 |
-|   LUT as Logic          |   66 |     0 |          0 |     32600 |  0.20 |
+| Slice LUTs              | 1564 |     0 |          0 |     32600 |  4.80 |
+|   LUT as Logic          | 1564 |     0 |          0 |     32600 |  4.80 |
 |   LUT as Memory         |    0 |     0 |          0 |      9600 |  0.00 |
 | Slice Registers         |    0 |     0 |          0 |     65200 |  0.00 |
 |   Register as Flip Flop |    0 |     0 |          0 |     65200 |  0.00 |
@@ -69,13 +69,13 @@ Table of Contents
 +------------------------------------------+------+-------+------------+-----------+-------+
 |                 Site Type                | Used | Fixed | Prohibited | Available | Util% |
 +------------------------------------------+------+-------+------------+-----------+-------+
-| Slice                                    |   23 |     0 |          0 |      8150 |  0.28 |
-|   SLICEL                                 |   16 |     0 |            |           |       |
-|   SLICEM                                 |    7 |     0 |            |           |       |
-| LUT as Logic                             |   66 |     0 |          0 |     32600 |  0.20 |
+| Slice                                    |  428 |     0 |          0 |      8150 |  5.25 |
+|   SLICEL                                 |  268 |     0 |            |           |       |
+|   SLICEM                                 |  160 |     0 |            |           |       |
+| LUT as Logic                             | 1564 |     0 |          0 |     32600 |  4.80 |
 |   using O5 output only                   |    0 |       |            |           |       |
-|   using O6 output only                   |   51 |       |            |           |       |
-|   using O5 and O6                        |   15 |       |            |           |       |
+|   using O6 output only                   | 1330 |       |            |           |       |
+|   using O5 and O6                        |  234 |       |            |           |       |
 | LUT as Memory                            |    0 |     0 |          0 |      9600 |  0.00 |
 |   LUT as Distributed RAM                 |    0 |     0 |            |           |       |
 |   LUT as Shift Register                  |    0 |     0 |            |           |       |
@@ -116,9 +116,9 @@ Table of Contents
 +-----------------------------+------+-------+------------+-----------+-------+
 |          Site Type          | Used | Fixed | Prohibited | Available | Util% |
 +-----------------------------+------+-------+------------+-----------+-------+
-| Bonded IOB                  |   32 |     0 |          0 |       210 | 15.24 |
-|   IOB Master Pads           |   15 |       |            |           |       |
-|   IOB Slave Pads            |   16 |       |            |           |       |
+| Bonded IOB                  |  128 |     0 |          0 |       210 | 60.95 |
+|   IOB Master Pads           |   61 |       |            |           |       |
+|   IOB Slave Pads            |   63 |       |            |           |       |
 | Bonded IPADs                |    0 |     0 |          0 |         2 |  0.00 |
 | PHY_CONTROL                 |    0 |     0 |          0 |         5 |  0.00 |
 | PHASER_REF                  |    0 |     0 |          0 |         5 |  0.00 |
@@ -173,14 +173,14 @@ Table of Contents
 +----------+------+---------------------+
 | Ref Name | Used | Functional Category |
 +----------+------+---------------------+
-| LUT6     |   33 |                 LUT |
-| LUT4     |   22 |                 LUT |
-| LUT5     |   17 |                 LUT |
-| OBUF     |   16 |                  IO |
-| IBUF     |   16 |                  IO |
-| LUT2     |    7 |                 LUT |
-| CARRY4   |    7 |          CarryLogic |
-| LUT3     |    2 |                 LUT |
+| LUT4     |  754 |                 LUT |
+| LUT6     |  684 |                 LUT |
+| LUT3     |  267 |                 LUT |
+| CARRY4   |  244 |          CarryLogic |
+| OBUF     |   64 |                  IO |
+| IBUF     |   64 |                  IO |
+| LUT5     |   63 |                 LUT |
+| LUT2     |   30 |                 LUT |
 +----------+------+---------------------+
 
 

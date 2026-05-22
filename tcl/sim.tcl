@@ -118,7 +118,6 @@ report_timing_summary -file "$RESULTS_DIR/${TB_NAME}_timing.rpt"
 set SAIF_FILE "$RESULTS_DIR/${TB_NAME}.saif"
 
 launch_simulation
-restart
 
 open_saif $SAIF_FILE
 
