@@ -59,6 +59,10 @@ def parse_filename(filename):
         
     if "radix4_compressor" in name:
         m_type = "radix4_compressor"
+    elif "approx_radix4" in name:
+        m_type = "approx_radix4"
+    elif "modified" in name:
+        m_type = "modified"
     elif "simple" in name:
         m_type = "simple"
     elif "radix" in name:

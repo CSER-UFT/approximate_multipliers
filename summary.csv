@@ -1,4 +1,7 @@
 experiment,Slice LUTs,Slice Registers,Slice DSPs,Total Power (W),Dynamic Power (W),Static Power (W)
+sim_approx_radix4_booth_32bit_exponential,1657,0,0,0.142,0.072,0.07
+sim_approx_radix4_booth_32bit_normal,1657,0,0,0.147,0.077,0.07
+sim_approx_radix4_booth_32bit_uniform,1657,0,0,0.147,0.077,0.07
 sim_compressor42_16bit_exponential,288,0,0,0.102,0.031,0.07
 sim_compressor42_16bit_normal,288,0,0,0.107,0.036,0.07
 sim_compressor42_16bit_uniform,288,0,0,0.107,0.037,0.07

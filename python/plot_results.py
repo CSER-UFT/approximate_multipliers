@@ -20,10 +20,12 @@ os.makedirs(PLOT_DIR, exist_ok=True)
 def classify(exp_name):
     """
     Extrai:
-    - tipo: exato / simples / radix / compressor / radix4_compressor / radix modificado
+    - tipo: exato / simples / radix / compressor / radix4_compressor / radix modificado / radix aproximado
     - bits: largura de bit
     """
-    if "radix4_compressor" in exp_name:
+    if "approx_radix4" in exp_name:
+        tipo = "approx_radix4"
+    elif "radix4_compressor" in exp_name:
         tipo = "radix4_compressor"
     elif "modified" in exp_name:
         tipo = "modified"
@@ -45,7 +47,7 @@ def plot_bar(data_dict, metric_key, y_label, title, filename):
     plt.figure(figsize=(10, 6))
     bit_sizes = sorted({b for t in data_dict for b in data_dict[t]})
     x = range(len(bit_sizes))
-    width = 0.12
+    width = 0.10
 
     # Função para obter média dos valores se for uma lista, ou o valor direto
     def get_val(t, b, k):
@@ -55,16 +57,18 @@ def plot_bar(data_dict, metric_key, y_label, title, filename):
     exato_vals = [get_val("exato", b, metric_key) for b in bit_sizes]
     simples_vals = [get_val("simple", b, metric_key) for b in bit_sizes]
     radix_vals = [get_val("radix", b, metric_key) for b in bit_sizes]
+    approx_radix_vals = [get_val("approx_radix4", b, metric_key) for b in bit_sizes]
     compressor_vals = [get_val("compressor", b, metric_key) for b in bit_sizes]
     radix_compressor_vals = [get_val("radix4_compressor", b, metric_key) for b in bit_sizes]
     modified_radix_vals = [get_val("modified", b, metric_key) for b in bit_sizes]
 
-    plt.bar([i - 2.5*width for i in x], exato_vals, width=width, label="EXATO ESTRUTURAL")
-    plt.bar([i - 1.5*width for i in x], simples_vals, width=width, label="EXATO FUNCIONAL")
-    plt.bar([i - 0.5*width for i in x], radix_vals, width=width, label="RADIX-4")
-    plt.bar([i + 0.5*width for i in x], compressor_vals, width=width, label="COMPRESSOR 4:2")
-    plt.bar([i + 1.5*width for i in x], radix_compressor_vals, width=width, label="RADIX + COMPRESSOR")
-    plt.bar([i + 2.5*width for i in x], modified_radix_vals, width=width, label="RADIX MODIFICADO")
+    plt.bar([i - 3.0*width for i in x], exato_vals, width=width, label="EXATO ESTRUTURAL")
+    plt.bar([i - 2.0*width for i in x], simples_vals, width=width, label="EXATO FUNCIONAL")
+    plt.bar([i - 1.0*width for i in x], radix_vals, width=width, label="RADIX-4")
+    plt.bar([i - 0.0*width for i in x], approx_radix_vals, width=width, label="RADIX APROXIMADO")
+    plt.bar([i + 1.0*width for i in x], compressor_vals, width=width, label="COMPRESSOR 4:2")
+    plt.bar([i + 2.0*width for i in x], radix_compressor_vals, width=width, label="RADIX + COMPRESSOR")
+    plt.bar([i + 3.0*width for i in x], modified_radix_vals, width=width, label="RADIX MODIFICADO")
 
     plt.xticks(x, [f"{b}-bit" for b in bit_sizes])
     plt.ylabel(y_label)
