@@ -20,10 +20,18 @@ os.makedirs(PLOT_DIR, exist_ok=True)
 def classify(exp_name):
     """
     Extrai:
-    - tipo: exato / simples / radix / compressor / radix4_compressor / radix modificado / radix aproximado
+    - tipo: diversas arquiteturas exatas e aproximadas
     - bits: largura de bit
     """
-    if "approx_radix4" in exp_name:
+    if "dsp_approx" in exp_name:
+        tipo = "dsp_approx"
+    elif "ppp_modified" in exp_name:
+        tipo = "ppp_modified"
+    elif "ppp_approx" in exp_name:
+        tipo = "ppp_approx"
+    elif "approx_modified_radix4" in exp_name:
+        tipo = "approx_modified"
+    elif "approx_radix4" in exp_name:
         tipo = "approx_radix4"
     elif "radix4_compressor" in exp_name:
         tipo = "radix4_compressor"
@@ -44,31 +52,41 @@ def classify(exp_name):
 
 def plot_bar(data_dict, metric_key, y_label, title, filename):
     """Gera gráfico de barras comparando os tipos por largura de bit"""
-    plt.figure(figsize=(10, 6))
+    plt.figure(figsize=(15, 8))
     bit_sizes = sorted({b for t in data_dict for b in data_dict[t]})
     x = range(len(bit_sizes))
-    width = 0.10
 
-    # Função para obter média dos valores se for uma lista, ou o valor direto
+    # Função para obter média dos valores
     def get_val(t, b, k):
         vals = data_dict.get(t, {}).get(b, {}).get(k, [0])
         return sum(vals) / len(vals) if vals else 0
+    
+    types = [
+        ("exato", "Exato Estrutural"),
+        ("simple", "Exato Funcional"),
+        ("radix", "Radix-4 Booth"),
+        ("modified", "Radix Modificado"),
+        ("approx_radix4", "Radix-4 Booth Approx"),
+        ("dsp_approx", "Radix-4 DSP Approx"),
+        ("approx_modified", "Mod Radix Booth Approx"),
+        ("ppp_approx", "Radix-4 PPP"),
+        ("ppp_modified", "Mod Radix PPP"),
+        ("approx_radix_comp", "Radix-4 Comp Approx"),
+        ("approx_mod_radix_comp", "Mod Radix Comp Approx"),
+        ("compressor", "Compressor 4:2"),
+        ("radix4_compressor", "Radix + Compressor")
+    ]
 
-    exato_vals = [get_val("exato", b, metric_key) for b in bit_sizes]
-    simples_vals = [get_val("simple", b, metric_key) for b in bit_sizes]
-    radix_vals = [get_val("radix", b, metric_key) for b in bit_sizes]
-    approx_radix_vals = [get_val("approx_radix4", b, metric_key) for b in bit_sizes]
-    compressor_vals = [get_val("compressor", b, metric_key) for b in bit_sizes]
-    radix_compressor_vals = [get_val("radix4_compressor", b, metric_key) for b in bit_sizes]
-    modified_radix_vals = [get_val("modified", b, metric_key) for b in bit_sizes]
+    # Filtrar apenas tipos que possuem dados
+    active_types = [t for t in types if any(get_val(t[0], b, metric_key) > 0 for b in bit_sizes)]
+    
+    num_types = len(active_types)
+    width = 0.8 / num_types  # Distribui as barras no espaço de 0.8 unidades
 
-    plt.bar([i - 3.0*width for i in x], exato_vals, width=width, label="EXATO ESTRUTURAL")
-    plt.bar([i - 2.0*width for i in x], simples_vals, width=width, label="EXATO FUNCIONAL")
-    plt.bar([i - 1.0*width for i in x], radix_vals, width=width, label="RADIX-4")
-    plt.bar([i - 0.0*width for i in x], approx_radix_vals, width=width, label="RADIX APROXIMADO")
-    plt.bar([i + 1.0*width for i in x], compressor_vals, width=width, label="COMPRESSOR 4:2")
-    plt.bar([i + 2.0*width for i in x], radix_compressor_vals, width=width, label="RADIX + COMPRESSOR")
-    plt.bar([i + 3.0*width for i in x], modified_radix_vals, width=width, label="RADIX MODIFICADO")
+    for i, (t_key, t_label) in enumerate(active_types):
+        vals = [get_val(t_key, b, metric_key) for b in bit_sizes]
+        offset = (i - (num_types-1)/2) * width
+        plt.bar([pos + offset for pos in x], vals, width=width, label=t_label)
 
     plt.xticks(x, [f"{b}-bit" for b in bit_sizes])
     plt.ylabel(y_label)
@@ -120,7 +138,7 @@ plot_bar(data, "static", "Potência (W)", "Comparação de Potência Estática",
 # =========================================================
 
 plot_bar(data, "lut", "Quantidade de LUTs", "Comparação de uso de LUTs", "comparacao_lut.pdf")
-plot_bar(data, "reg", "Quantidade de Registradores", "Comparação de uso de Registradores", "comparacao_registradores.pdf")
+#plot_bar(data, "reg", "Quantidade de Registradores", "Comparação de uso de Registradores", "comparacao_registradores.pdf")
 plot_bar(data, "dsp", "Quantidade de Blocos DSP", "Comparação de uso de Blocos DSP", "comparacao_dsp.pdf")
 
 # Eficiência energética (W/bit) - calculada sobre a média do total

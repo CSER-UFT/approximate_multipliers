@@ -18,10 +18,15 @@ def calculate_mae(y_true, y_pred):
     """Mean Absolute Error (MAE) - Também chamado de Mean Error Distance (MED)"""
     return np.mean(np.abs(y_true - y_pred))
 
-def calculate_mre(y_true, y_pred):
-    """Mean Relative Error (MRE)"""
+def calculate_nmed(mae, bits):
+    """Normalized Mean Error Distance (NMED)"""
+    # Normaliza pelo valor máximo possível do produto: (2^n - 1)^2
+    max_val = (2**int(bits) - 1)**2
+    return mae / max_val
+
+def calculate_mred(y_true, y_pred):
+    """Mean Relative Error Distance (MRED) - Equivalente ao MRE"""
     ed = np.abs(y_true - y_pred)
-    # Máscara para evitar divisão por zero onde o y_true é 0
     mask = y_true != 0
     if np.any(mask):
         return np.mean(ed[mask] / y_true[mask])
@@ -59,6 +64,18 @@ def parse_filename(filename):
         
     if "radix4_compressor" in name:
         m_type = "radix4_compressor"
+    elif "dsp_approx" in name:
+        m_type = "dsp_approx"
+    elif "ppp_modified_radix4" in name:
+        m_type = "ppp_modified"
+    elif "ppp_approx_radix4" in name:
+        m_type = "ppp_approx"
+    elif "approx_modified_radix_compressor" in name:
+        m_type = "approx_mod_radix_comp"
+    elif "approx_radix_compressor" in name:
+        m_type = "approx_radix_comp"
+    elif "approx_modified_radix4" in name:
+        m_type = "approx_modified"
     elif "approx_radix4" in name:
         m_type = "approx_radix4"
     elif "modified" in name:
@@ -139,11 +156,10 @@ def main():
                 y_t = y_true
                 y_p = y_pred
 
-            # Cálculo das 5 métricas
-            ed_vec = calculate_ed(y_t, y_p)
-            med = np.mean(ed_vec) # Mean Error Distance (ED médio)
+            # Cálculo das métricas
             mae = calculate_mae(y_t, y_p)
-            mre = calculate_mre(y_t, y_p)
+            nmed = calculate_nmed(mae, bits)
+            mred = calculate_mred(y_t, y_p)
             ep = calculate_ep(y_t, y_p)
             mse = calculate_mse(y_t, y_p)
             
@@ -152,9 +168,9 @@ def main():
                 "multiplier": m_type,
                 "bits": bits,
                 "distribution": dist,
-                "ED (MED)": med,
                 "MAE": mae,
-                "MRE": mre,
+                "NMED": nmed,
+                "MRED": mred,
                 "EP": ep,
                 "MSE": mse
             })
@@ -163,7 +179,7 @@ def main():
     results.sort(key=lambda x: (int(x["bits"]), x["distribution"], x["multiplier"]))
 
     # Salva no CSV
-    fieldnames = ["experiment", "multiplier", "bits", "distribution", "ED (MED)", "MAE", "MRE", "EP", "MSE"]
+    fieldnames = ["experiment", "multiplier", "bits", "distribution", "MAE", "NMED", "MRED", "EP", "MSE"]
     with open(OUTPUT_CSV, "w", newline="") as f:
         writer = csv.DictWriter(f, fieldnames=fieldnames)
         writer.writeheader()

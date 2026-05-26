@@ -76,8 +76,14 @@ def main():
     # Mapeamento de nomes para melhor legibilidade
     name_map = {
         'radix': 'Radix-4',
-        'approx_radix4': 'Radix Aproximado',
+        'approx_radix4': 'Radix-4 Booth Approx',
+        'dsp_approx': 'Radix-4 DSP Approx',
+        'ppp_approx': 'Radix-4 PPP',
+        'approx_radix_comp': 'Radix-4 Comp Approx',
         'modified': 'Radix Modificado',
+        'approx_modified': 'Mod Radix Booth Approx',
+        'ppp_modified': 'Mod Radix PPP',
+        'approx_mod_radix_comp': 'Mod Radix Comp Approx',
         'compressor': 'Compressor 4:2',
         'radix4_compressor': 'Radix + Compressor',
         'simple': 'Exato Funcional',
@@ -87,10 +93,10 @@ def main():
 
     # Métricas para plotar
     metrics = {
-        "MRE": "Mean Relative Error (MRE)",
-        "EP": "Error Probability (EP)",
-        "MAE": "Mean Absolute Error (MAE)",
-        "ED (MED)": "Mean Error Distance (MED)"
+        "MAE": "Mean Absolute Error (MAE/MED)",
+        "NMED": "Normalized Mean Error Distance (NMED)",
+        "MRED": "Mean Relative Error Distance (MRED)",
+        "EP": "Error Probability (EP)"
     }
 
     print(f"Iniciando geração de gráficos de erro em {PLOT_DIR}...")

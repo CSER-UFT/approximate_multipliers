@@ -1,7 +1,7 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
 -----------------------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version     : Vivado v.2022.2 (lin64) Build 3671981 Fri Oct 14 04:59:54 MDT 2022
-| Date             : Mon May 25 12:16:29 2026
+| Date             : Tue May 26 10:20:53 2026
 | Host             : sarue running 64-bit Ubuntu 20.04.6 LTS
 | Command          : report_power -file /home/jeova.barbosa/approximate_multipliers/resultados/sim_approx_radix4_booth_32bit_exponential_power.rpt
 | Design           : approx_radix4_booth_32bit

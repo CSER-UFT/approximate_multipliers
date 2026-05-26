@@ -14,10 +14,27 @@ RUN_TCL = $(TCL_DIR)/sim.tcl
 
 # Lista de experimentos (testbenches)
 EXPERIMENTS = \
-	sim_modified_radix4_8bit \
-	sim_modified_radix4_32bit_exponential \
-	sim_modified_radix4_32bit_normal \
-	sim_modified_radix4_32bit_uniform
+	sim_dsp_approx_radix4_booth_32bit_exponential \
+	sim_dsp_approx_radix4_booth_32bit_normal \
+	sim_dsp_approx_radix4_booth_32bit_uniform \
+	sim_approx_modified_radix4_32bit_exponential \
+	sim_approx_modified_radix4_32bit_normal \
+	sim_approx_modified_radix4_32bit_uniform \
+	sim_ppp_modified_radix4_32bit_exponential \
+	sim_ppp_modified_radix4_32bit_normal \
+	sim_ppp_modified_radix4_32bit_uniform \
+	sim_approx_modified_radix_compressor_32bit_exponential \
+	sim_approx_modified_radix_compressor_32bit_normal \
+	sim_approx_modified_radix_compressor_32bit_uniform \
+	sim_approx_radix4_booth_32bit_exponential \
+	sim_approx_radix4_booth_32bit_normal \
+	sim_approx_radix4_booth_32bit_uniform \
+	sim_ppp_approx_radix4_32bit_exponential \
+	sim_ppp_approx_radix4_32bit_normal \
+	sim_ppp_approx_radix4_32bit_uniform \
+	sim_approx_radix_compressor_32bit_exponential \
+	sim_approx_radix_compressor_32bit_normal \
+	sim_approx_radix_compressor_32bit_uniform
 
 
 # =========================================================
