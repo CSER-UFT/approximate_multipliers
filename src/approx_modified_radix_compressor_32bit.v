@@ -48,8 +48,8 @@ module approx_modified_radix_compressor_32bit (
                 if (i <= range_b) begin
                     case (triplet)
                         3'b001, 3'b010: raw_pp = $signed(a_ext) << (2*i);
-                        3'b011:         raw_pp = $signed(a_ext) << (2*i + 1);
-                        3'b100:         raw_pp = -($signed(a_ext) << (2*i + 1));
+                        3'b011:         raw_pp = (i < 4) ? ($signed(a_ext) << (2*i)) : ($signed(a_ext) << (2*i + 1));
+                        3'b100:         raw_pp = (i < 4) ? -($signed(a_ext) << (2*i)) : -($signed(a_ext) << (2*i + 1));
                         3'b101, 3'b110: raw_pp = -($signed(a_ext) << (2*i));
                         default:        raw_pp = 65'd0;
                     endcase

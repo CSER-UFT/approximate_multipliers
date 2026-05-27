@@ -1,7 +1,7 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
 ----------------------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version     : Vivado v.2022.2 (lin64) Build 3671981 Fri Oct 14 04:59:54 MDT 2022
-| Date             : Tue May 26 13:54:04 2026
+| Date             : Wed May 27 12:20:10 2026
 | Host             : sarue running 64-bit Ubuntu 20.04.6 LTS
 | Command          : report_power -file /home/jeova.barbosa/approximate_multipliers/resultados/sim_approx_radix_compressor_32bit_normal_power.rpt
 | Design           : approx_radix_compressor_32bit
@@ -30,18 +30,18 @@ Table of Contents
 ----------
 
 +--------------------------+------------------------------------------------------------------------------------------------------+
-| Total On-Chip Power (W)  | 0.162                                                                                                |
+| Total On-Chip Power (W)  | 0.168                                                                                                |
 | Design Power Budget (W)  | Unspecified*                                                                                         |
 | Power Budget Margin (W)  | NA                                                                                                   |
-| Dynamic (W)              | 0.091                                                                                                |
+| Dynamic (W)              | 0.098                                                                                                |
 | Device Static (W)        | 0.070                                                                                                |
 | Effective TJA (C/W)      | 4.9                                                                                                  |
 | Max Ambient (C)          | 84.2                                                                                                 |
 | Junction Temperature (C) | 25.8                                                                                                 |
-| Confidence Level         | High                                                                                                 |
+| Confidence Level         | Medium                                                                                               |
 | Setting File             | ---                                                                                                  |
 | Simulation Activity File | /home/jeova.barbosa/approximate_multipliers/resultados/sim_approx_radix_compressor_32bit_normal.saif |
-| Design Nets Matched      | 30%   (804/2641)                                                                                     |
+| Design Nets Matched      | 6%   (152/2651)                                                                                      |
 +--------------------------+------------------------------------------------------------------------------------------------------+
 * Specify Design Power Budget using, set_operating_conditions -design_power_budget <value in Watts>
 
@@ -53,14 +53,14 @@ Table of Contents
 | On-Chip        | Power (W) | Used     | Available | Utilization (%) |
 +----------------+-----------+----------+-----------+-----------------+
 | Clocks         |     0.000 |        3 |       --- |             --- |
-| Slice Logic    |     0.014 |     1860 |       --- |             --- |
-|   LUT as Logic |     0.013 |     1473 |     32600 |            4.52 |
+| Slice Logic    |     0.018 |     1877 |       --- |             --- |
+|   LUT as Logic |     0.017 |     1479 |     32600 |            4.54 |
 |   CARRY4       |    <0.001 |      160 |      8150 |            1.96 |
 |   Others       |     0.000 |        2 |       --- |             --- |
-| Signals        |     0.015 |     1916 |       --- |             --- |
+| Signals        |     0.018 |     1933 |       --- |             --- |
 | I/O            |     0.063 |      128 |       210 |           60.95 |
 | Static Power   |     0.070 |          |           |                 |
-| Total          |     0.162 |          |           |                 |
+| Total          |     0.168 |          |           |                 |
 +----------------+-----------+----------+-----------+-----------------+
 
 
@@ -70,7 +70,7 @@ Table of Contents
 +-----------+-------------+-----------+-------------+------------+-------------+-------------+------------+
 | Source    | Voltage (V) | Total (A) | Dynamic (A) | Static (A) | Powerup (A) | Budget (A)  | Margin (A) |
 +-----------+-------------+-----------+-------------+------------+-------------+-------------+------------+
-| Vccint    |       1.000 |     0.039 |       0.029 |      0.010 |       NA    | Unspecified | NA         |
+| Vccint    |       1.000 |     0.045 |       0.036 |      0.010 |       NA    | Unspecified | NA         |
 | Vccaux    |       1.800 |     0.018 |       0.005 |      0.013 |       NA    | Unspecified | NA         |
 | Vcco33    |       3.300 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
 | Vcco25    |       2.500 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
@@ -87,17 +87,17 @@ Table of Contents
 1.3 Confidence Level
 --------------------
 
-+-----------------------------+------------+------------------------------------------------+--------+
-| User Input Data             | Confidence | Details                                        | Action |
-+-----------------------------+------------+------------------------------------------------+--------+
-| Design implementation state | High       | Design is routed                               |        |
-| Clock nodes activity        | High       | User specified more than 95% of clocks         |        |
-| I/O nodes activity          | High       | User specified more than 95% of inputs         |        |
-| Internal nodes activity     | High       | User specified more than 25% of internal nodes |        |
-| Device models               | High       | Device models are Production                   |        |
-|                             |            |                                                |        |
-| Overall confidence level    | High       |                                                |        |
-+-----------------------------+------------+------------------------------------------------+--------+
++-----------------------------+------------+------------------------------------------------+------------------------------------------------------------------------------------------------------------+
+| User Input Data             | Confidence | Details                                        | Action                                                                                                     |
++-----------------------------+------------+------------------------------------------------+------------------------------------------------------------------------------------------------------------+
+| Design implementation state | High       | Design is routed                               |                                                                                                            |
+| Clock nodes activity        | High       | User specified more than 95% of clocks         |                                                                                                            |
+| I/O nodes activity          | High       | User specified more than 95% of inputs         |                                                                                                            |
+| Internal nodes activity     | Medium     | User specified less than 25% of internal nodes | Provide missing internal nodes activity with simulation results or by editing the "By Resource Type" views |
+| Device models               | High       | Device models are Production                   |                                                                                                            |
+|                             |            |                                                |                                                                                                            |
+| Overall confidence level    | Medium     |                                                |                                                                                                            |
++-----------------------------+------------+------------------------------------------------+------------------------------------------------------------------------------------------------------------+
 
 
 2. Settings
@@ -135,7 +135,7 @@ Table of Contents
 +-------------------------------+-----------+
 | Name                          | Power (W) |
 +-------------------------------+-----------+
-| approx_radix_compressor_32bit |     0.091 |
+| approx_radix_compressor_32bit |     0.098 |
 +-------------------------------+-----------+
 
 

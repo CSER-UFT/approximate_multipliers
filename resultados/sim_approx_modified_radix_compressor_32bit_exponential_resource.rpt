@@ -1,7 +1,7 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2022.2 (lin64) Build 3671981 Fri Oct 14 04:59:54 MDT 2022
-| Date         : Tue May 26 14:03:15 2026
+| Date         : Wed May 27 12:29:30 2026
 | Host         : sarue running 64-bit Ubuntu 20.04.6 LTS
 | Command      : report_utilization -file /home/jeova.barbosa/approximate_multipliers/resultados/sim_approx_modified_radix_compressor_32bit_exponential_resource.rpt
 | Design       : approx_modified_radix_compressor_32bit
@@ -32,8 +32,8 @@ Table of Contents
 +-------------------------+------+-------+------------+-----------+-------+
 |        Site Type        | Used | Fixed | Prohibited | Available | Util% |
 +-------------------------+------+-------+------------+-----------+-------+
-| Slice LUTs              | 1495 |     0 |          0 |     32600 |  4.59 |
-|   LUT as Logic          | 1495 |     0 |          0 |     32600 |  4.59 |
+| Slice LUTs              | 1479 |     0 |          0 |     32600 |  4.54 |
+|   LUT as Logic          | 1479 |     0 |          0 |     32600 |  4.54 |
 |   LUT as Memory         |    0 |     0 |          0 |      9600 |  0.00 |
 | Slice Registers         |    0 |     0 |          0 |     65200 |  0.00 |
 |   Register as Flip Flop |    0 |     0 |          0 |     65200 |  0.00 |
@@ -69,13 +69,13 @@ Table of Contents
 +------------------------------------------+------+-------+------------+-----------+-------+
 |                 Site Type                | Used | Fixed | Prohibited | Available | Util% |
 +------------------------------------------+------+-------+------------+-----------+-------+
-| Slice                                    |  414 |     0 |          0 |      8150 |  5.08 |
-|   SLICEL                                 |  245 |     0 |            |           |       |
-|   SLICEM                                 |  169 |     0 |            |           |       |
-| LUT as Logic                             | 1495 |     0 |          0 |     32600 |  4.59 |
+| Slice                                    |  416 |     0 |          0 |      8150 |  5.10 |
+|   SLICEL                                 |  243 |     0 |            |           |       |
+|   SLICEM                                 |  173 |     0 |            |           |       |
+| LUT as Logic                             | 1479 |     0 |          0 |     32600 |  4.54 |
 |   using O5 output only                   |    0 |       |            |           |       |
-|   using O6 output only                   | 1258 |       |            |           |       |
-|   using O5 and O6                        |  237 |       |            |           |       |
+|   using O6 output only                   | 1246 |       |            |           |       |
+|   using O5 and O6                        |  233 |       |            |           |       |
 | LUT as Memory                            |    0 |     0 |          0 |      9600 |  0.00 |
 |   LUT as Distributed RAM                 |    0 |     0 |            |           |       |
 |   LUT as Shift Register                  |    0 |     0 |            |           |       |
@@ -173,14 +173,15 @@ Table of Contents
 +----------+------+---------------------+
 | Ref Name | Used | Functional Category |
 +----------+------+---------------------+
-| LUT4     |  868 |                 LUT |
-| LUT6     |  626 |                 LUT |
+| LUT4     |  779 |                 LUT |
+| LUT6     |  537 |                 LUT |
 | CARRY4   |  160 |          CarryLogic |
-| LUT3     |  101 |                 LUT |
-| LUT5     |   75 |                 LUT |
+| LUT5     |  155 |                 LUT |
+| LUT1     |  124 |                 LUT |
 | OBUF     |   64 |                  IO |
+| LUT3     |   64 |                 LUT |
 | IBUF     |   64 |                  IO |
-| LUT2     |   62 |                 LUT |
+| LUT2     |   53 |                 LUT |
 +----------+------+---------------------+
 
 

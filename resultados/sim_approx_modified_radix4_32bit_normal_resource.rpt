@@ -1,14 +1,14 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
--------------------------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2022.2 (lin64) Build 3671981 Fri Oct 14 04:59:54 MDT 2022
-| Date         : Wed May 27 12:18:10 2026
+| Date         : Wed May 27 11:15:23 2026
 | Host         : sarue running 64-bit Ubuntu 20.04.6 LTS
-| Command      : report_utilization -file /home/jeova.barbosa/approximate_multipliers/resultados/sim_approx_radix_compressor_32bit_normal_resource.rpt
-| Design       : approx_radix_compressor_32bit
+| Command      : report_utilization -file /home/jeova.barbosa/approximate_multipliers/resultados/sim_approx_modified_radix4_32bit_normal_resource.rpt
+| Design       : approx_modified_radix4_32bit
 | Device       : xc7s50csga324-1
 | Speed File   : -1
 | Design State : Routed
--------------------------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------------------------
 
 Utilization Design Information
 
@@ -32,8 +32,8 @@ Table of Contents
 +-------------------------+------+-------+------------+-----------+-------+
 |        Site Type        | Used | Fixed | Prohibited | Available | Util% |
 +-------------------------+------+-------+------------+-----------+-------+
-| Slice LUTs              | 1479 |     0 |          0 |     32600 |  4.54 |
-|   LUT as Logic          | 1479 |     0 |          0 |     32600 |  4.54 |
+| Slice LUTs              | 1587 |     0 |          0 |     32600 |  4.87 |
+|   LUT as Logic          | 1587 |     0 |          0 |     32600 |  4.87 |
 |   LUT as Memory         |    0 |     0 |          0 |      9600 |  0.00 |
 | Slice Registers         |    0 |     0 |          0 |     65200 |  0.00 |
 |   Register as Flip Flop |    0 |     0 |          0 |     65200 |  0.00 |
@@ -69,13 +69,13 @@ Table of Contents
 +------------------------------------------+------+-------+------------+-----------+-------+
 |                 Site Type                | Used | Fixed | Prohibited | Available | Util% |
 +------------------------------------------+------+-------+------------+-----------+-------+
-| Slice                                    |  412 |     0 |          0 |      8150 |  5.06 |
-|   SLICEL                                 |  249 |     0 |            |           |       |
-|   SLICEM                                 |  163 |     0 |            |           |       |
-| LUT as Logic                             | 1479 |     0 |          0 |     32600 |  4.54 |
+| Slice                                    |  443 |     0 |          0 |      8150 |  5.44 |
+|   SLICEL                                 |  292 |     0 |            |           |       |
+|   SLICEM                                 |  151 |     0 |            |           |       |
+| LUT as Logic                             | 1587 |     0 |          0 |     32600 |  4.87 |
 |   using O5 output only                   |    0 |       |            |           |       |
-|   using O6 output only                   | 1243 |       |            |           |       |
-|   using O5 and O6                        |  236 |       |            |           |       |
+|   using O6 output only                   | 1389 |       |            |           |       |
+|   using O5 and O6                        |  198 |       |            |           |       |
 | LUT as Memory                            |    0 |     0 |          0 |      9600 |  0.00 |
 |   LUT as Distributed RAM                 |    0 |     0 |            |           |       |
 |   LUT as Shift Register                  |    0 |     0 |            |           |       |
@@ -173,15 +173,15 @@ Table of Contents
 +----------+------+---------------------+
 | Ref Name | Used | Functional Category |
 +----------+------+---------------------+
-| LUT4     |  778 |                 LUT |
-| LUT6     |  536 |                 LUT |
-| CARRY4   |  160 |          CarryLogic |
+| LUT4     |  690 |                 LUT |
+| LUT6     |  595 |                 LUT |
+| CARRY4   |  244 |          CarryLogic |
+| LUT3     |  199 |                 LUT |
 | LUT5     |  154 |                 LUT |
 | LUT1     |  124 |                 LUT |
-| LUT3     |   67 |                 LUT |
 | OBUF     |   64 |                  IO |
 | IBUF     |   64 |                  IO |
-| LUT2     |   56 |                 LUT |
+| LUT2     |   23 |                 LUT |
 +----------+------+---------------------+
 
 
