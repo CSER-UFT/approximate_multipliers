@@ -1,7 +1,7 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
 --------------------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2022.2 (lin64) Build 3671981 Fri Oct 14 04:59:54 MDT 2022
-| Date         : Wed May 27 12:23:50 2026
+| Date         : Thu May 28 11:58:53 2026
 | Host         : sarue running 64-bit Ubuntu 20.04.6 LTS
 | Command      : report_utilization -file /home/jeova.barbosa/approximate_multipliers/resultados/sim_approx_radix_compressor_32bit_uniform_resource.rpt
 | Design       : approx_radix_compressor_32bit
@@ -32,8 +32,8 @@ Table of Contents
 +-------------------------+------+-------+------------+-----------+-------+
 |        Site Type        | Used | Fixed | Prohibited | Available | Util% |
 +-------------------------+------+-------+------------+-----------+-------+
-| Slice LUTs              | 1479 |     0 |          0 |     32600 |  4.54 |
-|   LUT as Logic          | 1479 |     0 |          0 |     32600 |  4.54 |
+| Slice LUTs              | 2001 |     0 |          0 |     32600 |  6.14 |
+|   LUT as Logic          | 2001 |     0 |          0 |     32600 |  6.14 |
 |   LUT as Memory         |    0 |     0 |          0 |      9600 |  0.00 |
 | Slice Registers         |    0 |     0 |          0 |     65200 |  0.00 |
 |   Register as Flip Flop |    0 |     0 |          0 |     65200 |  0.00 |
@@ -69,13 +69,13 @@ Table of Contents
 +------------------------------------------+------+-------+------------+-----------+-------+
 |                 Site Type                | Used | Fixed | Prohibited | Available | Util% |
 +------------------------------------------+------+-------+------------+-----------+-------+
-| Slice                                    |  412 |     0 |          0 |      8150 |  5.06 |
-|   SLICEL                                 |  249 |     0 |            |           |       |
-|   SLICEM                                 |  163 |     0 |            |           |       |
-| LUT as Logic                             | 1479 |     0 |          0 |     32600 |  4.54 |
+| Slice                                    |  557 |     0 |          0 |      8150 |  6.83 |
+|   SLICEL                                 |  361 |     0 |            |           |       |
+|   SLICEM                                 |  196 |     0 |            |           |       |
+| LUT as Logic                             | 2001 |     0 |          0 |     32600 |  6.14 |
 |   using O5 output only                   |    0 |       |            |           |       |
-|   using O6 output only                   | 1243 |       |            |           |       |
-|   using O5 and O6                        |  236 |       |            |           |       |
+|   using O6 output only                   | 1773 |       |            |           |       |
+|   using O5 and O6                        |  228 |       |            |           |       |
 | LUT as Memory                            |    0 |     0 |          0 |      9600 |  0.00 |
 |   LUT as Distributed RAM                 |    0 |     0 |            |           |       |
 |   LUT as Shift Register                  |    0 |     0 |            |           |       |
@@ -173,15 +173,15 @@ Table of Contents
 +----------+------+---------------------+
 | Ref Name | Used | Functional Category |
 +----------+------+---------------------+
-| LUT4     |  778 |                 LUT |
-| LUT6     |  536 |                 LUT |
+| LUT6     |  801 |                 LUT |
+| LUT4     |  723 |                 LUT |
+| LUT5     |  411 |                 LUT |
 | CARRY4   |  160 |          CarryLogic |
-| LUT5     |  154 |                 LUT |
 | LUT1     |  124 |                 LUT |
-| LUT3     |   67 |                 LUT |
+| LUT2     |   90 |                 LUT |
+| LUT3     |   80 |                 LUT |
 | OBUF     |   64 |                  IO |
 | IBUF     |   64 |                  IO |
-| LUT2     |   56 |                 LUT |
 +----------+------+---------------------+
 
 

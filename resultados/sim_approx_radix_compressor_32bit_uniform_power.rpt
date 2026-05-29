@@ -1,7 +1,7 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
 -----------------------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version     : Vivado v.2022.2 (lin64) Build 3671981 Fri Oct 14 04:59:54 MDT 2022
-| Date             : Wed May 27 12:25:49 2026
+| Date             : Thu May 28 12:01:27 2026
 | Host             : sarue running 64-bit Ubuntu 20.04.6 LTS
 | Command          : report_power -file /home/jeova.barbosa/approximate_multipliers/resultados/sim_approx_radix_compressor_32bit_uniform_power.rpt
 | Design           : approx_radix_compressor_32bit
@@ -30,18 +30,18 @@ Table of Contents
 ----------
 
 +--------------------------+-------------------------------------------------------------------------------------------------------+
-| Total On-Chip Power (W)  | 0.168                                                                                                 |
+| Total On-Chip Power (W)  | 0.195                                                                                                 |
 | Design Power Budget (W)  | Unspecified*                                                                                          |
 | Power Budget Margin (W)  | NA                                                                                                    |
-| Dynamic (W)              | 0.098                                                                                                 |
+| Dynamic (W)              | 0.125                                                                                                 |
 | Device Static (W)        | 0.070                                                                                                 |
 | Effective TJA (C/W)      | 4.9                                                                                                   |
-| Max Ambient (C)          | 84.2                                                                                                  |
-| Junction Temperature (C) | 25.8                                                                                                  |
+| Max Ambient (C)          | 84.0                                                                                                  |
+| Junction Temperature (C) | 26.0                                                                                                  |
 | Confidence Level         | Medium                                                                                                |
 | Setting File             | ---                                                                                                   |
 | Simulation Activity File | /home/jeova.barbosa/approximate_multipliers/resultados/sim_approx_radix_compressor_32bit_uniform.saif |
-| Design Nets Matched      | 6%   (152/2651)                                                                                       |
+| Design Nets Matched      | 27%   (839/3165)                                                                                      |
 +--------------------------+-------------------------------------------------------------------------------------------------------+
 * Specify Design Power Budget using, set_operating_conditions -design_power_budget <value in Watts>
 
@@ -53,14 +53,14 @@ Table of Contents
 | On-Chip        | Power (W) | Used     | Available | Utilization (%) |
 +----------------+-----------+----------+-----------+-----------------+
 | Clocks         |     0.000 |        3 |       --- |             --- |
-| Slice Logic    |     0.018 |     1877 |       --- |             --- |
-|   LUT as Logic |     0.017 |     1479 |     32600 |            4.54 |
+| Slice Logic    |     0.023 |     2391 |       --- |             --- |
+|   LUT as Logic |     0.023 |     2001 |     32600 |            6.14 |
 |   CARRY4       |    <0.001 |      160 |      8150 |            1.96 |
 |   Others       |     0.000 |        2 |       --- |             --- |
-| Signals        |     0.018 |     1933 |       --- |             --- |
-| I/O            |     0.062 |      128 |       210 |           60.95 |
+| Signals        |     0.026 |     2449 |       --- |             --- |
+| I/O            |     0.076 |      128 |       210 |           60.95 |
 | Static Power   |     0.070 |          |           |                 |
-| Total          |     0.168 |          |           |                 |
+| Total          |     0.195 |          |           |                 |
 +----------------+-----------+----------+-----------+-----------------+
 
 
@@ -70,11 +70,11 @@ Table of Contents
 +-----------+-------------+-----------+-------------+------------+-------------+-------------+------------+
 | Source    | Voltage (V) | Total (A) | Dynamic (A) | Static (A) | Powerup (A) | Budget (A)  | Margin (A) |
 +-----------+-------------+-----------+-------------+------------+-------------+-------------+------------+
-| Vccint    |       1.000 |     0.045 |       0.036 |      0.010 |       NA    | Unspecified | NA         |
-| Vccaux    |       1.800 |     0.018 |       0.005 |      0.013 |       NA    | Unspecified | NA         |
+| Vccint    |       1.000 |     0.059 |       0.050 |      0.010 |       NA    | Unspecified | NA         |
+| Vccaux    |       1.800 |     0.019 |       0.006 |      0.013 |       NA    | Unspecified | NA         |
 | Vcco33    |       3.300 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
 | Vcco25    |       2.500 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
-| Vcco18    |       1.800 |     0.030 |       0.029 |      0.001 |       NA    | Unspecified | NA         |
+| Vcco18    |       1.800 |     0.037 |       0.036 |      0.001 |       NA    | Unspecified | NA         |
 | Vcco15    |       1.500 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
 | Vcco135   |       1.350 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
 | Vcco12    |       1.200 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
@@ -135,7 +135,7 @@ Table of Contents
 +-------------------------------+-----------+
 | Name                          | Power (W) |
 +-------------------------------+-----------+
-| approx_radix_compressor_32bit |     0.098 |
+| approx_radix_compressor_32bit |     0.125 |
 +-------------------------------+-----------+
 
 

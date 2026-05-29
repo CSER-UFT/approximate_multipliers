@@ -1,7 +1,7 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2022.2 (lin64) Build 3671981 Fri Oct 14 04:59:54 MDT 2022
-| Date         : Wed May 27 12:35:15 2026
+| Date         : Thu May 28 12:11:32 2026
 | Host         : sarue running 64-bit Ubuntu 20.04.6 LTS
 | Command      : report_timing_summary -file /home/jeova.barbosa/approximate_multipliers/resultados/sim_approx_modified_radix_compressor_32bit_normal_timing.rpt
 | Design       : approx_modified_radix_compressor_32bit
