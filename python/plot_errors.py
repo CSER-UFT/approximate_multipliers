@@ -75,21 +75,20 @@ def main():
 
     # Mapeamento de nomes para melhor legibilidade
     name_map = {
-        'radix': 'Radix-4',
         'approx_radix4': 'Radix-4 Booth Approx',
         'dsp_approx': 'Radix-4 DSP Approx',
         'ppp_approx': 'Radix-4 PPP',
         'approx_radix_comp': 'Radix-4 Comp Approx',
-        'modified': 'Radix Modificado',
         'approx_modified': 'Mod Radix Booth Approx',
         'ppp_modified': 'Mod Radix PPP',
-        'approx_mod_radix_comp': 'Mod Radix Comp Approx',
-        'compressor': 'Compressor 4:2',
-        'radix4_compressor': 'Radix + Compressor',
-        'simple': 'Exato Funcional',
-        'exact': 'Exato Estrutural'
+        'approx_mod_radix_comp': 'Mod Radix Comp Approx'
     }
-    df['multiplier'] = df['multiplier'].map(name_map).fillna(df['multiplier'])
+    
+    # Filtrar apenas os multiplicadores aproximados que estão no name_map
+    df = df[df['multiplier'].isin(name_map.keys())].copy()
+    
+    # Aplicar o mapeamento
+    df['multiplier'] = df['multiplier'].map(name_map)
 
     # Métricas para plotar
     metrics = {

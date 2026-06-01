@@ -18,20 +18,43 @@ Este repositório contém uma análise comparativa de diversas arquiteturas de m
 
 ---
 
-## 2. Multiplicadores Aproximados
+## 2. Multiplicadores Aproximados: Descrição Técnica
 
-Nesta seção, exploramos como simplificações estruturais impactam o resultado final.
+Nesta seção, detalhamos a lógica de hardware e as simplificações matemáticas aplicadas em cada arquitetura aproximada. Essas descrições servem como base para a fundamentação teórica do projeto.
 
-### Abordagens de Aproximação
-1.  **Partial Product Perforation (PPP):**
-    - **Descrição:** Ignora-se os produtos parciais de menor peso (LSBs). No código, os dois primeiros produtos parciais são forçados a zero.
-    - **Relação com Resultado:** O erro inserido é **muito baixo** (NMED na ordem de 10^-10), pois afeta apenas os bits menos significativos. É uma das técnicas mais eficientes testadas.
-2.  **Hybrid Radix-4 Booth Approximation:**
-    - **Descrição:** Utiliza uma abordagem híbrida na codificação de Booth. Para os produtos parciais menos significativos (iterações $i < 4$), os casos que exigiriam `2A` ou `-2A` são aproximados para `1A` ou `-1A`. Para as iterações superiores ($i \ge 4$), a codificação é mantida exata.
-    - **Relação com Resultado:** Esta técnica reduz o erro médio em comparação com a aproximação total, concentrando a imprecisão apenas nos bits de menor peso, similar à filosofia do PPP.
-3.  **Approximate Compressor 4:2:**
-    - **Descrição:** Altera a lógica interna do compressor. Elimina-se a dependência do cin e cout (forçando cout = 0), quebrando a cadeia de carry. Além disso, substitui portas XOR complexas por lógica AND/OR simplificada.
-    - **Relação com Resultado:** O erro é **extremamente alto** (NMED ~0.25). Ao quebrar a cadeia de carry em múltiplos níveis da árvore de redução, o resultado final diverge massivamente do valor real.
+### A. Partial Product Perforation (PPP)
+*   **Técnica:** Perfuração de Produtos Parciais.
+*   **Lógica de Hardware:** Em um multiplicador Radix-4, são gerados $N/2$ produtos parciais. Na arquitetura PPP, os produtos parciais de menor peso (LSBs) são omitidos (forçados a zero).
+*   **Implementação:** Neste projeto, os **2 primeiros produtos parciais** (correspondentes às iterações $i=0$ e $i=1$ do algoritmo de Booth) são ignorados.
+*   **Impacto:** Como os produtos parciais de menor peso contribuem menos para a magnitude do resultado final, o erro introduzido é desprezível (erro relativo quase nulo), mas a área e a árvore de redução são simplificadas.
+
+### B. Hybrid Radix-4 Booth Approximation
+*   **Técnica:** Codificação de Booth Aproximada com Segmentação.
+*   **Lógica de Hardware:** O algoritmo Radix-4Booth exato exige a geração do termo $2A$ (um shift à esquerda do multiplicando). Isso requer hardware adicional ou roteamento extra.
+*   **Aproximação:** Para reduzir a complexidade, as operações de codificação para $2A$ e $-2A$ são simplificadas para $1A$ e $-1A$, respectivamente.
+*   **Abordagem Híbrida:** Para equilibrar precisão e economia, essa simplificação é aplicada apenas aos **primeiros 4 produtos parciais** ($i < 4$). Do quinto produto parcial em diante, a codificação é mantida exata ($2A$ é gerado corretamente).
+*   **Impacto:** Reduz a lógica de geração de produtos parciais nos bits menos significativos, onde o erro tem menor impacto no resultado total.
+
+### C. Approximate Compressor 4:2
+*   **Técnica:** Redução de Árvore com Lógica Incompleta.
+*   **Lógica de Hardware:** Um compressor 4:2 exato reduz 4 bits de entrada (mais um `cin`) para 2 bits de saída (`sum` e `carry`), mantendo a integridade aritmética.
+*   **Aproximação:** A lógica interna é simplificada para reduzir o caminho crítico e o número de portas XOR.
+    - O `sum` é mantido como o XOR das 4 entradas (exato para $cin=0$).
+    - O `carry` é simplificado para uma lógica `OR` entre as combinações das entradas, ignorando carrys de ordem superior.
+    - O sinal `cout` é forçado a `0`, eliminando a propagação horizontal de carry.
+*   **Impacto:** Economiza área e potência em aplicações ASIC, mas introduz um erro significativo em cada nível da árvore de redução.
+
+### D. Approximate Modified Radix-4 (Híbrido)
+*   **Técnica:** Combinação de *Gating* de Potência e Codificação Aproximada.
+*   **Lógica de Hardware:** Esta arquitetura combina duas técnicas:
+    1.  **Modified Radix (Gating):** Uma lógica de detecção de faixa (*Range Detection*) analisa os bits significativos do multiplicador ($b$). Se o multiplicador for pequeno, as unidades de hardware que processariam os produtos parciais superiores são desligadas (gated), forçando-os a zero.
+    2.  **Booth Aproximado:** Aplica a simplificação de $2A \to 1A$ nos produtos parciais inferiores.
+*   **Impacto:** Visa maximizar a economia de potência dinâmica em cenários onde os dados de entrada possuem magnitudes variadas, ao custo de um erro estrutural fixo.
+
+### E. Approximate Radix + Compressor
+*   **Técnica:** Aproximação em Duas Camadas.
+*   **Lógica de Hardware:** Utiliza a Codificação de Booth Híbrida (item B) para gerar os produtos parciais e, em seguida, utiliza a Árvore de Compressores Aproximados (item C) para realizar a soma desses produtos.
+*   **Impacto:** É a arquitetura mais agressiva em termos de simplificação, acumulando erros tanto na fase de geração quanto na fase de redução de produtos parciais.
 
 ---
 
