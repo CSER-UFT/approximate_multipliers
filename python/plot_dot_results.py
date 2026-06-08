@@ -12,13 +12,15 @@ INPUT_CSV = "summary.csv"
 PLOT_DIR = "./plots"
 os.makedirs(PLOT_DIR, exist_ok=True)
 
-# Mapeamento de tipos para nomes amigáveis
+# Mapeamento de tipos para nomes amigáveis (Sincronizado com plot_results.py)
+# A ordem aqui define a ordem no eixo Y do gráfico
 TYPE_MAP = {
     "exato": "Exato Estrutural",
     "simple": "Exato Funcional",
     "radix": "Radix-4 Booth",
     "modified": "Radix Modificado",
     "approx_radix4": "Radix-4 Booth Approx",
+    "approx_radix4_LOA": "Radix-4 LOA Approx",
     "dsp_approx": "Radix-4 DSP Approx",
     "approx_modified": "Mod Radix Booth Approx",
     "ppp_approx": "Radix-4 PPP",
@@ -48,6 +50,8 @@ def classify(exp_name):
         tipo = "approx_modified"
     elif "approx_radix_compressor" in exp_name:
         tipo = "approx_radix_comp"
+    elif "approx_radix4_LOA" in exp_name:
+        tipo = "approx_radix4_LOA"
     elif "approx_radix4" in exp_name:
         tipo = "approx_radix4"
     elif "radix4_compressor" in exp_name:
@@ -92,18 +96,22 @@ def load_data(filepath):
     # Aplicar classificação
     classified = df['experiment'].apply(classify)
     df['type_key'] = [c[0] for c in classified]
-    df['bits'] = [c[1] for c in classified]
-    df['Distribution'] = [c[2] for c in classified]
+    df['Bits'] = [c[1] for c in classified]
+    df['Distribuição'] = [c[2] for c in classified]
     
     # Mapear para nomes amigáveis
     df['Architecture'] = df['type_key'].map(TYPE_MAP)
+    
+    # FORÇAR A ORDEM CATEGÓRICA para evitar desalinhamento no Seaborn
+    order = [v for v in TYPE_MAP.values()]
+    df['Architecture'] = pd.Categorical(df['Architecture'], categories=order, ordered=True)
     
     # Calcular métricas extras
     if 'Dynamic Power (W)' in df.columns and 'Static Power (W)' in df.columns:
         df['Total Power (W)'] = df['Dynamic Power (W)'] + df['Static Power (W)']
     
     if 'Total Power (W)' in df.columns:
-        df['Efficiency (W/bit)'] = df['Total Power (W)'] / df['bits'].apply(lambda x: x if x > 0 else 1)
+        df['Efficiency (W/bit)'] = df['Total Power (W)'] / df['Bits'].apply(lambda x: x if x > 0 else 1)
     
     return df
 
@@ -113,9 +121,8 @@ def plot_dot_metric(df, metric, x_label, title, filename):
     """
     plt.figure(figsize=(12, 10))
     
-    # Filtrar arquiteturas presentes
-    present_architectures = df['Architecture'].unique()
-    order = [name for name in TYPE_MAP.values() if name in present_architectures]
+    # A ordem agora é ditada pela categoria definida no DataFrame
+    order = [v for v in TYPE_MAP.values() if v in df['Architecture'].unique()]
     
     # Marcadores específicos
     marker_map = {
@@ -126,13 +133,13 @@ def plot_dot_metric(df, metric, x_label, title, filename):
     }
     
     # Criar o gráfico base usando scatterplot
-    # Definimos linewidth para a borda ser visível
+    # IMPORTANTE: Definimos explicitamente o eixo Y como categórico e mantemos a ordem
     ax = sns.scatterplot(
         data=df,
         y='Architecture',
         x=metric,
-        hue='bits',
-        style='Distribution',
+        hue='Bits',
+        style='Distribuição',
         markers=marker_map,
         palette='viridis',
         s=150,
@@ -141,31 +148,61 @@ def plot_dot_metric(df, metric, x_label, title, filename):
     )
 
     # Tornar os marcadores "vazios" (hollow)
-    # Transferimos a cor do preenchimento para a borda e removemos o preenchimento
     for collection in ax.collections:
         facecolors = collection.get_facecolors()
         if len(facecolors) > 0:
             collection.set_edgecolors(facecolors)
             collection.set_facecolors('none')
 
-    # Ajustar ordem e labels do eixo Y
+    # Garantir que o eixo Y respeite a ordem do TYPE_MAP e não ordene alfabeticamente
+    plt.gca().set_ylim(-0.5, len(order)-0.5)
     plt.gca().set_yticks(range(len(order)))
     plt.gca().set_yticklabels(order)
     
     plt.title(title, fontsize=15, fontweight='bold', pad=20)
-    plt.xlabel(x_label, fontsize=12)
-    plt.ylabel("Arquitetura", fontsize=12)
+    plt.xlabel(x_label, fontsize=13)
+    plt.ylabel("Arquitetura", fontsize=13)
     
-    # Configurar legenda
-    legend = plt.legend(title="Legenda", bbox_to_anchor=(1.02, 1), loc='upper left')
+    # Configurar legenda customizada com espaço entre grupos
+    handles, labels = ax.get_legend_handles_labels()
     
-    # Ajustar ícones da legenda para serem hollow
-    handles = getattr(legend, 'legend_handles', getattr(legend, 'legendHandles', []))
-    for handle in handles:
+    new_handles = []
+    new_labels = []
+    
+    for h, l in zip(handles, labels):
+        # Se encontrarmos o início do grupo de Distribuição, inserimos um espaço em branco
+        if l == 'Distribuição':
+            # Handle "fantasma" invisível para criar o espaço (como um "enter")
+            new_handles.append(plt.Line2D([0], [0], color='none'))
+            new_labels.append("")
+        elif l == 'Bits':
+            new_handles.append(plt.Line2D([0], [0], color='none'))
+            new_labels.append("")
+        
+        new_handles.append(h)
+        new_labels.append(l)
+
+    legend = plt.legend(
+        new_handles, 
+        new_labels,
+        title="Legenda", 
+        bbox_to_anchor=(1.02, 1), 
+        loc='upper left'
+    )
+    
+    # Ajustar ícones da legenda para serem hollow (após reconstruir a legenda)
+    # No Matplotlib novo, os handles na legenda são acessados via legend_handles
+    legend_handles = getattr(legend, 'legend_handles', getattr(legend, 'legendHandles', []))
+    for handle in legend_handles:
         if hasattr(handle, 'set_facecolor'):
-            handle.set_edgecolors(handle.get_facecolors())
-            handle.set_facecolors('none')
-            handle.set_linewidth(2)
+            # Apenas aplica o efeito hollow se for um marcador (evita mexer no spacer invisível)
+            try:
+                edge = handle.get_facecolor()
+                handle.set_edgecolors(edge)
+                handle.set_facecolors('none')
+                handle.set_linewidth(2)
+            except:
+                pass
     
     plt.tight_layout()
     filepath = os.path.join(PLOT_DIR, filename)

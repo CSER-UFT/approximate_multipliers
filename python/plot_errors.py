@@ -76,6 +76,7 @@ def main():
     # Mapeamento de nomes para melhor legibilidade
     name_map = {
         'approx_radix4': 'Radix-4 Booth Approx',
+        'approx_radix4_LOA': 'Radix-4 LOA Approx',
         'dsp_approx': 'Radix-4 DSP Approx',
         'ppp_approx': 'Radix-4 PPP',
         'approx_radix_comp': 'Radix-4 Comp Approx',

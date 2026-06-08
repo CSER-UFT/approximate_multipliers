@@ -76,6 +76,8 @@ def parse_filename(filename):
         m_type = "approx_radix_comp"
     elif "approx_modified_radix4" in name:
         m_type = "approx_modified"
+    elif "approx_radix4_LOA" in name:
+        m_type = "approx_radix4_LOA"
     elif "approx_radix4" in name:
         m_type = "approx_radix4"
     elif "modified" in name:
