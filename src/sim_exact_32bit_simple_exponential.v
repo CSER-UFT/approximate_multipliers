@@ -9,7 +9,6 @@ module sim_exact_32bit_simple_exponential;
     // Arquivos
     integer in_file;
     integer out_file;
-    integer r;
 
     // DUT
     exact_32bit_simple dut (
@@ -35,12 +34,10 @@ module sim_exact_32bit_simple_exponential;
             $finish;
         end
 
-        $display("Simulação iniciada: operador * 32_exponential");
+        $display("Simulação iniciada: exact_simple 32bit exponential");
 
         while ($fscanf(in_file, "%h %h", a, b) == 2) begin
-            
             #10;
-
             $fwrite(out_file, "%h %h %h\n", a, b, product);
         end
 

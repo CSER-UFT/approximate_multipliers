@@ -9,9 +9,8 @@ module sim_dsp_approx_radix4_booth_32bit_uniform;
     // Arquivos
     integer in_file;
     integer out_file;
-    integer r;
 
-    // DUT - Instanciando a versão com DSP
+    // DUT
     dsp_approx_radix4_booth_32bit dut (
         .a(a),
         .b(b),
@@ -35,12 +34,10 @@ module sim_dsp_approx_radix4_booth_32bit_uniform;
             $finish;
         end
 
-        $display("Simulação iniciada: multiplicador com DSP approx radix 32bit uniform");
+        $display("Simulação iniciada: dsp_approx_radix4_booth 32bit uniform");
 
         while ($fscanf(in_file, "%h %h", a, b) == 2) begin
-            
             #10;
-
             $fwrite(out_file, "%h %h %h\n", a, b, product);
         end
 

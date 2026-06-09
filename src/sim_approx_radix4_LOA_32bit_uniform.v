@@ -9,7 +9,6 @@ module sim_approx_radix4_LOA_32bit_uniform;
     // Arquivos
     integer in_file;
     integer out_file;
-    integer r;
 
     // DUT
     approx_radix4_LOA_32bit dut (
@@ -18,7 +17,7 @@ module sim_approx_radix4_LOA_32bit_uniform;
         .product(product)
     );
 
-    // Caminhos (Mantendo o padrão absoluto dos arquivos existentes)
+    // Caminhos
     reg [1023:0] input_file  = "/home/jeova.barbosa/approximate_multipliers/data/32_uniform.txt";
     reg [1023:0] output_file = "/home/jeova.barbosa/approximate_multipliers/resultados/approx_radix4_LOA_32bit_uniform.txt";
     
@@ -35,7 +34,7 @@ module sim_approx_radix4_LOA_32bit_uniform;
             $finish;
         end
 
-        $display("Simulação iniciada: approx_radix4_LOA_32bit_uniform");
+        $display("Simulação iniciada: approx_radix4_LOA 32bit uniform");
 
         while ($fscanf(in_file, "%h %h", a, b) == 2) begin
             #10;

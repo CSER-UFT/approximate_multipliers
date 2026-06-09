@@ -9,7 +9,6 @@ module sim_exact_32bit_normal;
     // Arquivos
     integer in_file;
     integer out_file;
-    integer r;
 
     // DUT
     exact_32bit dut (
@@ -35,12 +34,10 @@ module sim_exact_32bit_normal;
             $finish;
         end
 
-        $display("Simulação iniciada: multiplicador manual 32_normal");
+        $display("Simulação iniciada: exact 32bit normal");
 
         while ($fscanf(in_file, "%h %h", a, b) == 2) begin
-            
             #10;
-
             $fwrite(out_file, "%h %h %h\n", a, b, product);
         end
 

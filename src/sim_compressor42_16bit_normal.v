@@ -9,7 +9,6 @@ module sim_compressor42_16bit_normal;
     // Arquivos
     integer in_file;
     integer out_file;
-    integer r;
 
     // DUT
     compressor42_16bit dut (
@@ -35,12 +34,10 @@ module sim_compressor42_16bit_normal;
             $finish;
         end
 
-        $display("Simulação iniciada: compressor 4:2 16bit_normal");
+        $display("Simulação iniciada: compressor42 16bit normal");
 
         while ($fscanf(in_file, "%h %h", a, b) == 2) begin
-            
             #10;
-
             $fwrite(out_file, "%h %h %h\n", a, b, product);
         end
 

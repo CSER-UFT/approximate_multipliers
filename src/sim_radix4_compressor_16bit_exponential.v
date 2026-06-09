@@ -9,7 +9,6 @@ module sim_radix4_compressor_16bit_exponential;
     // Arquivos
     integer in_file;
     integer out_file;
-    integer r;
 
     // DUT
     radix4_compressor_16bit dut (
@@ -35,12 +34,10 @@ module sim_radix4_compressor_16bit_exponential;
             $finish;
         end
 
-        $display("Simulação iniciada: multiplicador radix + compressor 16bit exponential");
+        $display("Simulação iniciada: radix4_compressor 16bit exponential");
 
         while ($fscanf(in_file, "%h %h", a, b) == 2) begin
-            
             #10;
-
             $fwrite(out_file, "%h %h %h\n", a, b, product);
         end
 

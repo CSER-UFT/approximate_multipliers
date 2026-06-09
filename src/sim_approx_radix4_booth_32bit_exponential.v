@@ -9,7 +9,6 @@ module sim_approx_radix4_booth_32bit_exponential;
     // Arquivos
     integer in_file;
     integer out_file;
-    integer r;
 
     // DUT
     approx_radix4_booth_32bit dut (
@@ -18,7 +17,7 @@ module sim_approx_radix4_booth_32bit_exponential;
         .product(product)
     );
 
-    // Caminhos (Ajustados para o padrão do projeto)
+    // Caminhos
     reg [1023:0] input_file  = "/home/jeova.barbosa/approximate_multipliers/data/32_exponential.txt";
     reg [1023:0] output_file = "/home/jeova.barbosa/approximate_multipliers/resultados/approx_radix4_booth_32bit_exponential.txt";
     
@@ -35,12 +34,10 @@ module sim_approx_radix4_booth_32bit_exponential;
             $finish;
         end
 
-        $display("Simulação iniciada: multiplicador approx radix 32bit exponential");
+        $display("Simulação iniciada: approx_radix4_booth 32bit exponential");
 
         while ($fscanf(in_file, "%h %h", a, b) == 2) begin
-            
             #10;
-
             $fwrite(out_file, "%h %h %h\n", a, b, product);
         end
 

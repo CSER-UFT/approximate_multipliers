@@ -2,7 +2,7 @@
 
 /**
  * Multiplicador Radix-4 Booth com Perfuração de Produtos Parciais (PPP)
- * Técnica: Os 2 produtos parciais menos significativos (i=0 e i=1) são ignorados.
+ * Técnica: Os 3 produtos parciais menos significativos (i=0, i=1 e i=2) são ignorados.
  * Isso reduz o número de somas necessárias e simplifica a árvore de redução/acumulador.
  */
 module ppp_approx_radix4_32bit (
@@ -26,8 +26,8 @@ always @(*) begin
 
     // Mantém N/2 = 16 iterações, mas pula as iniciais (Perfuração)
     for (i = 0; i < 16; i = i + 1) begin
-        // Perfuração: Ignora os 2 primeiros PPs (menor peso)
-        if (i < 2) begin
+        // Perfuração: Ignora os 3 primeiros PPs (menor peso)
+        if (i < 3) begin
             pp = 65'd0;
         end else begin
             case (extended_b[2*i +: 3])

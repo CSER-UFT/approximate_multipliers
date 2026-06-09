@@ -9,7 +9,6 @@ module sim_modified_radix4_16bit_normal;
     // Arquivos
     integer in_file;
     integer out_file;
-    integer r;
 
     // DUT
     modified_radix4_16bit dut (
@@ -35,12 +34,10 @@ module sim_modified_radix4_16bit_normal;
             $finish;
         end
 
-        $display("Simulação iniciada: multiplicador radix modificado 16bit normal");
+        $display("Simulação iniciada: modified_radix4 16bit normal");
 
         while ($fscanf(in_file, "%h %h", a, b) == 2) begin
-            
             #10;
-
             $fwrite(out_file, "%h %h %h\n", a, b, product);
         end
 

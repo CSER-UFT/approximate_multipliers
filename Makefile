@@ -14,27 +14,34 @@ RUN_TCL = $(TCL_DIR)/sim.tcl
 
 # Lista de experimentos (testbenches)
 EXPERIMENTS = \
-	sim_dsp_approx_radix4_booth_32bit_exponential \
-	sim_dsp_approx_radix4_booth_32bit_normal \
-	sim_dsp_approx_radix4_booth_32bit_uniform \
-	sim_approx_modified_radix4_32bit_exponential \
-	sim_approx_modified_radix4_32bit_normal \
-	sim_approx_modified_radix4_32bit_uniform \
-	sim_ppp_modified_radix4_32bit_exponential \
-	sim_ppp_modified_radix4_32bit_normal \
-	sim_ppp_modified_radix4_32bit_uniform \
-	sim_approx_modified_radix_compressor_32bit_exponential \
-	sim_approx_modified_radix_compressor_32bit_normal \
-	sim_approx_modified_radix_compressor_32bit_uniform \
-	sim_approx_radix4_booth_32bit_exponential \
-	sim_approx_radix4_booth_32bit_normal \
-	sim_approx_radix4_booth_32bit_uniform \
-	sim_ppp_approx_radix4_32bit_exponential \
-	sim_ppp_approx_radix4_32bit_normal \
-	sim_ppp_approx_radix4_32bit_uniform \
-	sim_approx_radix_compressor_32bit_exponential \
-	sim_approx_radix_compressor_32bit_normal \
-	sim_approx_radix_compressor_32bit_uniform
+	sim_approx_modified_radix4_16bit_exponential \
+	sim_approx_modified_radix4_16bit_normal \
+	sim_approx_modified_radix4_16bit_uniform \
+	sim_approx_modified_radix4_8bit \
+	sim_approx_modified_radix_compressor_16bit_exponential \
+	sim_approx_modified_radix_compressor_16bit_normal \
+	sim_approx_modified_radix_compressor_16bit_uniform \
+	sim_approx_modified_radix_compressor_8bit \
+	sim_approx_radix4_booth_16bit_exponential \
+	sim_approx_radix4_booth_16bit_normal \
+	sim_approx_radix4_booth_16bit_uniform \
+	sim_approx_radix4_booth_8bit \
+	sim_approx_radix4_LOA_16bit_exponential \
+	sim_approx_radix4_LOA_16bit_normal \
+	sim_approx_radix4_LOA_16bit_uniform \
+	sim_approx_radix4_LOA_8bit \
+	sim_approx_radix_compressor_16bit_exponential \
+	sim_approx_radix_compressor_16bit_normal \
+	sim_approx_radix_compressor_16bit_uniform \
+	sim_approx_radix_compressor_8bit \
+	sim_ppp_approx_radix4_16bit_exponential \
+	sim_ppp_approx_radix4_16bit_normal \
+	sim_ppp_approx_radix4_16bit_uniform \
+	sim_ppp_approx_radix4_8bit \
+	sim_ppp_modified_radix4_16bit_exponential \
+	sim_ppp_modified_radix4_16bit_normal \
+	sim_ppp_modified_radix4_16bit_uniform \
+	sim_ppp_modified_radix4_8bit
 
 
 # =========================================================

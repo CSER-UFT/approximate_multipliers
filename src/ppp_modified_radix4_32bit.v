@@ -41,8 +41,8 @@ module ppp_modified_radix4_32bit (
         else                        range_b = 0;
 
         for (i = 0; i < 16; i = i + 1) begin
-            // Perfuração: Pula os 2 primeiros bits de peso (i=0 e i=1)
-            if (i >= 2 && i <= range_b) begin
+            // Perfuração: Pula os 3 primeiros bits de peso (i=0, i=1 e i=2)
+            if (i >= 3 && i <= range_b) begin
                 case (extended_b[2*i +: 3])
                     3'b000, 3'b111: pp = 65'd0;
                     3'b001, 3'b010: pp = a_ext << (2*i);

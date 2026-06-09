@@ -96,7 +96,8 @@ def main():
         "MAE": "Mean Absolute Error (MAE/MED)",
         "NMED": "Normalized Mean Error Distance (NMED)",
         "MRED": "Mean Relative Error Distance (MRED)",
-        "EP": "Error Probability (EP)"
+        "EP": "Error Probability (EP)",
+        "MSE": "Mean Squared Error (MSE)"
     }
 
     print(f"Iniciando geração de gráficos de erro em {PLOT_DIR}...")

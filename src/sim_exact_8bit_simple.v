@@ -9,7 +9,6 @@ module sim_exact_8bit_simple;
     // Arquivos
     integer in_file;
     integer out_file;
-    integer r;
 
     // DUT
     exact_8bit_simple dut (
@@ -35,12 +34,10 @@ module sim_exact_8bit_simple;
             $finish;
         end
 
-        $display("Simulação iniciada: operador *");
+        $display("Simulação iniciada: exact_simple 8bit");
 
         while ($fscanf(in_file, "%h %h", a, b) == 2) begin
-            
             #10;
-
             $fwrite(out_file, "%h %h %h\n", a, b, product);
         end
 

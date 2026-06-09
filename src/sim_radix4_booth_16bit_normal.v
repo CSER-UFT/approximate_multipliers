@@ -9,7 +9,6 @@ module sim_radix4_booth_16bit_normal;
     // Arquivos
     integer in_file;
     integer out_file;
-    integer r;
 
     // DUT
     radix4_booth_16bit dut (
@@ -20,7 +19,7 @@ module sim_radix4_booth_16bit_normal;
 
     // Caminhos
     reg [1023:0] input_file  = "/home/jeova.barbosa/approximate_multipliers/data/16_normal.txt";
-    reg [1023:0] output_file = "/home/jeova.barbosa/approximate_multipliers/resultados/radix4_16bit_normal.txt";
+    reg [1023:0] output_file = "/home/jeova.barbosa/approximate_multipliers/resultados/radix4_booth_16bit_normal.txt";
     
     initial begin
         in_file  = $fopen(input_file, "r");
@@ -35,12 +34,10 @@ module sim_radix4_booth_16bit_normal;
             $finish;
         end
 
-        $display("Simulação iniciada: multiplicador radix 16bit normal");
+        $display("Simulação iniciada: radix4_booth 16bit normal");
 
         while ($fscanf(in_file, "%h %h", a, b) == 2) begin
-            
             #10;
-
             $fwrite(out_file, "%h %h %h\n", a, b, product);
         end
 

@@ -9,7 +9,6 @@ module sim_modified_radix4_32bit_uniform;
     // Arquivos
     integer in_file;
     integer out_file;
-    integer r;
 
     // DUT
     modified_radix4_32bit dut (
@@ -35,12 +34,10 @@ module sim_modified_radix4_32bit_uniform;
             $finish;
         end
 
-        $display("Simulação iniciada: multiplicador radix modificado 32bit uniform");
+        $display("Simulação iniciada: modified_radix4 32bit uniform");
 
         while ($fscanf(in_file, "%h %h", a, b) == 2) begin
-            
             #10;
-
             $fwrite(out_file, "%h %h %h\n", a, b, product);
         end
 
