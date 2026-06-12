@@ -12,6 +12,18 @@ INPUT_CSV = "métricas_erro.csv"
 PLOT_DIR = "./plots/errors"
 os.makedirs(PLOT_DIR, exist_ok=True)
 
+# Configurações de fonte para LaTeX
+plt.rcParams.update({
+    'font.size': 22,
+    'axes.titlesize': 26,
+    'axes.labelsize': 24,
+    'xtick.labelsize': 22,
+    'ytick.labelsize': 22,
+    'legend.fontsize': 20,
+    'legend.title_fontsize': 22,
+    'figure.titlesize': 28
+})
+
 def plot_error_metric(df, metric, title, filename):
     """
     Gera um gráfico de barras comparando a métrica para diferentes cenários.
@@ -33,9 +45,9 @@ def plot_error_metric(df, metric, title, filename):
         palette='magma'
     )
 
-    plt.title(title, fontsize=16, fontweight='bold')
-    plt.xlabel("Cenário (Bits e Distribuição)", fontsize=12)
-    plt.ylabel(metric, fontsize=12)
+    plt.title(title, fontweight='bold')
+    plt.xlabel("Cenário (Bits e Distribuição)")
+    plt.ylabel(metric)
     plt.legend(title="Arquitetura", bbox_to_anchor=(1.02, 1), loc='upper left', borderaxespad=0.)
     
     # Verificação para escala logarítmica

@@ -12,6 +12,18 @@ INPUT_CSV = "summary.csv"
 PLOT_DIR = "./plots"
 os.makedirs(PLOT_DIR, exist_ok=True)
 
+# Configurações de fonte para LaTeX
+plt.rcParams.update({
+    'font.size': 22,
+    'axes.titlesize': 26,
+    'axes.labelsize': 24,
+    'xtick.labelsize': 22,
+    'ytick.labelsize': 22,
+    'legend.fontsize': 20,
+    'legend.title_fontsize': 22,
+    'figure.titlesize': 28
+})
+
 # Mapeamento de tipos para nomes amigáveis (Sincronizado com plot_results.py)
 # A ordem aqui define a ordem no eixo Y do gráfico
 TYPE_MAP = {
@@ -102,6 +114,9 @@ def load_data(filepath):
     # Mapear para nomes amigáveis
     df['Architecture'] = df['type_key'].map(TYPE_MAP)
     
+    # Nova coluna para separar exatos de aproximados
+    df['is_approx'] = df['experiment'].str.contains('approx|ppp', case=False)
+
     # FORÇAR A ORDEM CATEGÓRICA para evitar desalinhamento no Seaborn
     order = [v for v in TYPE_MAP.values()]
     df['Architecture'] = pd.Categorical(df['Architecture'], categories=order, ordered=True)
@@ -119,10 +134,15 @@ def plot_dot_metric(df, metric, x_label, title, filename):
     """
     Gera um Cleveland Dot Plot com marcadores ocos (hollow).
     """
+    # Remover categorias não utilizadas para evitar linhas vazias no gráfico
+    df_plot = df.copy()
+    if hasattr(df_plot['Architecture'], 'cat'):
+        df_plot['Architecture'] = df_plot['Architecture'].cat.remove_unused_categories()
+
     plt.figure(figsize=(12, 10))
     
     # A ordem agora é ditada pela categoria definida no DataFrame
-    order = [v for v in TYPE_MAP.values() if v in df['Architecture'].unique()]
+    order = [v for v in TYPE_MAP.values() if v in df_plot['Architecture'].unique()]
     
     # Marcadores específicos
     marker_map = {
@@ -135,7 +155,7 @@ def plot_dot_metric(df, metric, x_label, title, filename):
     # Criar o gráfico base usando scatterplot
     # IMPORTANTE: Definimos explicitamente o eixo Y como categórico e mantemos a ordem
     ax = sns.scatterplot(
-        data=df,
+        data=df_plot,
         y='Architecture',
         x=metric,
         hue='Bits',
@@ -159,9 +179,9 @@ def plot_dot_metric(df, metric, x_label, title, filename):
     plt.gca().set_yticks(range(len(order)))
     plt.gca().set_yticklabels(order)
     
-    plt.title(title, fontsize=15, fontweight='bold', pad=20)
-    plt.xlabel(x_label, fontsize=13)
-    plt.ylabel("Arquitetura", fontsize=13)
+    plt.title(title, fontweight='bold', pad=20)
+    plt.xlabel(x_label)
+    plt.ylabel("Arquitetura")
     
     # Configurar legenda customizada com espaço entre grupos
     handles, labels = ax.get_legend_handles_labels()
@@ -225,9 +245,28 @@ def main():
 
     print(f"Iniciando geração de gráficos de pontos em {PLOT_DIR}...")
     
-    for metric_col, x_label, metric_name, filename in metrics:
-        if metric_col in df.columns:
-            plot_dot_metric(df, metric_col, x_label, f"Comparação de {metric_name}", filename)
+    # Separar os dados
+    df_approx = df[df['is_approx'] & ~df['experiment'].str.contains('dsp', case=False)].copy()
+    df_exact = df[~df['is_approx']].copy()
+    
+    # Gráfico sem separação (Todos), mas removendo multiplicadores com DSP
+    df_no_dsp = df[~df['experiment'].str.contains('dsp', case=False)].copy()
+
+    groups = [
+        (df_exact, "exatos", "Exatos"),
+        (df_approx, "aproximados", "Aproximados"),
+        (df_no_dsp, "sem_dsp", "Todos")
+    ]
+
+    for df_subset, suffix, label in groups:
+        if df_subset.empty:
+            continue
+            
+        print(f"\nGerando gráficos para {label.lower()}...")
+        for metric_col, x_label, metric_name, filename in metrics:
+            if metric_col in df_subset.columns:
+                new_filename = filename.replace(".pdf", f"_{suffix}.pdf")
+                plot_dot_metric(df_subset, metric_col, x_label, f"Comparação de {metric_name} - {label}", new_filename)
 
     print("\nProcesso concluído. Gráficos salvos em ./plots")
 

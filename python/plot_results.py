@@ -13,6 +13,17 @@ INPUT_CSV = "summary.csv"
 PLOT_DIR = "./plots"
 os.makedirs(PLOT_DIR, exist_ok=True)
 
+# Configurações de fonte para LaTeX
+plt.rcParams.update({
+    'font.size': 14,
+    'axes.titlesize': 18,
+    'axes.labelsize': 16,
+    'xtick.labelsize': 14,
+    'ytick.labelsize': 14,
+    'legend.fontsize': 12,
+    'figure.titlesize': 20
+})
+
 # =========================================================
 # Funções auxiliares
 # =========================================================
@@ -91,7 +102,7 @@ def plot_bar(data_dict, metric_key, y_label, title, filename):
     plt.xticks(x, [f"{b}-bit" for b in bit_sizes])
     plt.ylabel(y_label)
     plt.title(title)
-    plt.legend(fontsize=9, loc='upper left', bbox_to_anchor=(1, 1))
+    plt.legend(loc='upper left', bbox_to_anchor=(1, 1))
 
     if metric_key == "dsp":
         plt.gca().yaxis.set_major_locator(MaxNLocator(integer=True))

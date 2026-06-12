@@ -41,7 +41,14 @@ EXPERIMENTS = \
 	sim_ppp_modified_radix4_16bit_exponential \
 	sim_ppp_modified_radix4_16bit_normal \
 	sim_ppp_modified_radix4_16bit_uniform \
-	sim_ppp_modified_radix4_8bit
+	sim_ppp_modified_radix4_8bit \
+	sim_dsp_approx_radix4_booth_32bit_exponential \
+	sim_dsp_approx_radix4_booth_32bit_normal \
+	sim_dsp_approx_radix4_booth_32bit_uniform \
+	sim_dsp_approx_radix4_booth_16bit_exponential \
+	sim_dsp_approx_radix4_booth_16bit_normal \
+	sim_dsp_approx_radix4_booth_16bit_uniform \
+	sim_dsp_approx_radix4_booth_8bit
 
 
 # =========================================================
