@@ -143,9 +143,6 @@ def main():
         y_true = load_results(ref_path)
         
         for m_type, filename in multipliers.items():
-            if m_type == "exact":
-                continue
-                
             file_path = os.path.join(RESULTS_DIR, filename)
             y_pred = load_results(file_path)
             
@@ -159,11 +156,18 @@ def main():
                 y_p = y_pred
 
             # Cálculo das métricas
-            mae = calculate_mae(y_t, y_p)
-            nmed = calculate_nmed(mae, bits)
-            mred = calculate_mred(y_t, y_p)
-            ep = calculate_ep(y_t, y_p)
-            mse = calculate_mse(y_t, y_p)
+            if m_type == "exact":
+                mae = 0.0
+                nmed = 0.0
+                mred = 0.0
+                ep = 0.0
+                mse = 0.0
+            else:
+                mae = calculate_mae(y_t, y_p)
+                nmed = calculate_nmed(mae, bits)
+                mred = calculate_mred(y_t, y_p)
+                ep = calculate_ep(y_t, y_p)
+                mse = calculate_mse(y_t, y_p)
             
             results.append({
                 "experiment": filename.replace(".txt", ""),

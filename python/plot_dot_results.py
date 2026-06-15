@@ -247,7 +247,8 @@ def main():
     print(f"Iniciando geração de gráficos de pontos em {PLOT_DIR}...")
     
     # Separar os dados
-    df_approx = df[df['is_approx'] & ~df['experiment'].str.contains('dsp', case=False)].copy()
+    # Incluir o exato estrutural nos aproximados para servir de baseline
+    df_approx = df[(df['is_approx'] | (df['type_key'] == 'exato')) & ~df['experiment'].str.contains('dsp', case=False)].copy()
     df_exact = df[~df['is_approx']].copy()
     
     # Gráfico sem separação (Todos), mas removendo multiplicadores com DSP

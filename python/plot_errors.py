@@ -12,16 +12,16 @@ INPUT_CSV = "métricas_erro.csv"
 PLOT_DIR = "./plots/errors"
 os.makedirs(PLOT_DIR, exist_ok=True)
 
-# Configurações de fonte para LaTeX
+# Configurações de fonte para LaTeX - Ajustadas para maior área de plotagem
 plt.rcParams.update({
-    'font.size': 22,
-    'axes.titlesize': 26,
-    'axes.labelsize': 24,
-    'xtick.labelsize': 22,
-    'ytick.labelsize': 22,
-    'legend.fontsize': 20,
-    'legend.title_fontsize': 22,
-    'figure.titlesize': 28
+    'font.size': 16,
+    'axes.titlesize': 20,
+    'axes.labelsize': 18,
+    'xtick.labelsize': 14,
+    'ytick.labelsize': 14,
+    'legend.fontsize': 14,
+    'legend.title_fontsize': 16,
+    'figure.titlesize': 22
 })
 
 def plot_error_metric(df, metric, title, filename):
@@ -29,7 +29,8 @@ def plot_error_metric(df, metric, title, filename):
     Gera um gráfico de barras comparando a métrica para diferentes cenários.
     Usa escala logarítmica se a variação for muito grande.
     """
-    plt.figure(figsize=(14, 8))
+    # Aumentando o tamanho da figura para dar mais espaço ao gráfico
+    plt.figure(figsize=(18, 9))
     
     # Criamos uma coluna combinada para o eixo X
     # Ordenar primeiro para garantir consistência
@@ -45,10 +46,10 @@ def plot_error_metric(df, metric, title, filename):
         palette='magma'
     )
 
-    plt.title(title, fontweight='bold')
-    plt.xlabel("Cenário (Bits e Distribuição)")
-    plt.ylabel(metric)
-    plt.legend(title="Arquitetura", bbox_to_anchor=(1.02, 1), loc='upper left', borderaxespad=0.)
+    plt.title(title, fontweight='bold', pad=20)
+    plt.xlabel("Cenário (Bits e Distribuição)", labelpad=15)
+    plt.ylabel(metric, labelpad=15)
+    plt.legend(title="Arquitetura", bbox_to_anchor=(1.01, 1), loc='upper left', borderaxespad=0.)
     
     # Verificação para escala logarítmica
     # Se o valor máximo for muito maior que o mínimo (não zero)
@@ -56,7 +57,7 @@ def plot_error_metric(df, metric, title, filename):
     if not non_zero.empty:
         max_val = non_zero.max()
         min_val = non_zero.min()
-        if max_val / min_val > 100:
+        if max_val / min_val > 50: # Sensibilidade aumentada para log scale
             plt.yscale('log')
             plt.ylabel(metric + " (Escala Log)")
 
@@ -89,7 +90,6 @@ def main():
     name_map = {
         'approx_radix4': 'Radix-4 Booth Approx',
         'approx_radix4_LOA': 'Radix-4 LOA Approx',
-        'dsp_approx': 'Radix-4 DSP Approx',
         'ppp_approx': 'Radix-4 PPP',
         'approx_radix_comp': 'Radix-4 Comp Approx',
         'approx_modified': 'Mod Radix Booth Approx',
@@ -97,11 +97,20 @@ def main():
         'approx_mod_radix_comp': 'Mod Radix Comp Approx'
     }
     
-    # Filtrar apenas os multiplicadores aproximados que estão no name_map
+    # Filtrar apenas os multiplicadores que estão no name_map
     df = df[df['multiplier'].isin(name_map.keys())].copy()
     
     # Aplicar o mapeamento
     df['multiplier'] = df['multiplier'].map(name_map)
+
+    # Traduzir as distribuições
+    dist_map = {
+        'exponential': 'Exponencial',
+        'normal': 'Normal',
+        'uniform': 'Uniforme',
+        'default': 'Padrão'
+    }
+    df['distribution'] = df['distribution'].map(dist_map).fillna(df['distribution'])
 
     # Métricas para plotar
     metrics = {
