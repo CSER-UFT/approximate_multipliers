@@ -139,7 +139,7 @@ def plot_dot_metric(df, metric, x_label, title, filename):
     if hasattr(df_plot['Architecture'], 'cat'):
         df_plot['Architecture'] = df_plot['Architecture'].cat.remove_unused_categories()
 
-    plt.figure(figsize=(12, 10))
+    plt.figure(figsize=(10, 10))
     
     # A ordem agora é ditada pela categoria definida no DataFrame
     order = [v for v in TYPE_MAP.values() if v in df_plot['Architecture'].unique()]
@@ -236,6 +236,7 @@ def main():
         return
 
     metrics = [
+        ("Static Power (W)", "Potência Estática (W)", "Potência Estática", "dot_potencia_estatica.pdf"),
         ("Total Power (W)", "Potência Total (W)", "Potência Total", "dot_potencia_total.pdf"),
         ("Dynamic Power (W)", "Potência Dinâmica (W)", "Potência Dinâmica", "dot_potencia_dinamica.pdf"),
         ("Slice LUTs", "Quantidade de LUTs", "Uso de LUTs", "dot_comparacao_lut.pdf"),
