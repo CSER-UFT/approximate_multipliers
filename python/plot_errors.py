@@ -12,59 +12,116 @@ INPUT_CSV = "métricas_erro.csv"
 PLOT_DIR = "./plots/errors"
 os.makedirs(PLOT_DIR, exist_ok=True)
 
-# Configurações de fonte para LaTeX - Ajustadas para maior área de plotagem
+# Cores e estilos
+sns.set_theme(style="whitegrid")
+
+# Configurações de fonte para LaTeX (Mesmas de plot_dot_results.py)
 plt.rcParams.update({
-    'font.size': 16,
-    'axes.titlesize': 20,
-    'axes.labelsize': 18,
-    'xtick.labelsize': 14,
-    'ytick.labelsize': 14,
-    'legend.fontsize': 14,
-    'legend.title_fontsize': 16,
-    'figure.titlesize': 22
+    'font.size': 40,
+    'axes.titlesize': 50,
+    'axes.labelsize': 46,
+    'xtick.labelsize': 40,
+    'ytick.labelsize': 40,
+    'legend.fontsize': 34,
+    'legend.title_fontsize': 38,
+    'figure.titlesize': 54
 })
 
 def plot_error_metric(df, metric, title, filename):
     """
-    Gera um gráfico de barras comparando a métrica para diferentes cenários.
-    Usa escala logarítmica se a variação for muito grande.
+    Gera um Cleveland Dot Plot (Gráfico de Pontos) comparando a métrica para diferentes arquiteturas.
     """
-    # Aumentando o tamanho da figura para dar mais espaço ao gráfico
-    plt.figure(figsize=(18, 9))
+    plt.figure(figsize=(28, 26))
     
-    # Criamos uma coluna combinada para o eixo X
-    # Ordenar primeiro para garantir consistência
-    df_plot = df.sort_values(['bits', 'distribution']).copy()
-    df_plot['scenario'] = df_plot['bits'].astype(str) + "-bit\n" + df_plot['distribution']
+    # Marcadores específicos baseados na distribuição (formas geométricas ao invés de cores/texturas)
+    marker_map = {
+        "Exponencial": "o",
+        "Normal": "^",
+        "Uniforme": "s",
+        "Padrão": "D"
+    }
 
-    # Gerar o gráfico de barras
-    ax = sns.barplot(
-        data=df_plot, 
-        x='scenario', 
+    # Gerar o gráfico de pontos
+    ax = sns.scatterplot(
+        data=df, 
+        x='multiplier', 
         y=metric, 
-        hue='multiplier',
-        palette='magma'
+        hue='Bits',
+        style='Distribuição',
+        markers=marker_map,
+        palette='viridis',
+        s=1200,
+        linewidth=6,
+        alpha=1.0
     )
 
-    plt.title(title, fontweight='bold', pad=20)
-    plt.xlabel("Cenário (Bits e Distribuição)", labelpad=15)
-    plt.ylabel(metric, labelpad=15)
-    plt.legend(title="Arquitetura", bbox_to_anchor=(1.01, 1), loc='upper left', borderaxespad=0.)
+    # Tornar os marcadores "vazios" (hollow) para consistência visual
+    for collection in ax.collections:
+        facecolors = collection.get_facecolors()
+        if len(facecolors) > 0:
+            collection.set_edgecolors(facecolors)
+            collection.set_facecolors('none')
+
+    # Ajustes dos Eixos
+    order = df['multiplier'].unique()
+    plt.gca().set_xlim(-0.5, len(order)-0.5)
+    plt.gca().set_xticks(range(len(order)))
+    plt.gca().set_xticklabels(order, rotation=45, ha='right')
+
+    plt.title(title, fontweight='bold', pad=30)
+    plt.xlabel("")
+    plt.ylabel(metric, labelpad=40)
+    
+    # Configurar legenda customizada com espaço entre grupos
+    handles, labels = ax.get_legend_handles_labels()
+    
+    new_handles = []
+    new_labels = []
+    
+    for h, l in zip(handles, labels):
+        if l == 'Distribuição':
+            new_handles.append(plt.Line2D([0], [0], color='none'))
+            new_labels.append("")
+        elif l == 'Bits':
+            new_handles.append(plt.Line2D([0], [0], color='none'))
+            new_labels.append("")
+        
+        new_handles.append(h)
+        new_labels.append(l)
+
+    legend = plt.legend(
+        new_handles, 
+        new_labels,
+        title="Legenda", 
+        bbox_to_anchor=(1.02, 1), 
+        loc='upper left',
+        markerscale=1.2,
+        labelspacing=0.9,
+        handletextpad=1
+    )
+    
+    # Ajustar ícones da legenda para serem hollow
+    legend_handles = getattr(legend, 'legend_handles', getattr(legend, 'legendHandles', []))
+    for handle in legend_handles:
+        if hasattr(handle, 'set_facecolor'):
+            try:
+                edge = handle.get_facecolor()
+                handle.set_edgecolors(edge)
+                handle.set_facecolors('none')
+                handle.set_linewidth(6)
+            except:
+                pass
     
     # Verificação para escala logarítmica
-    # Se o valor máximo for muito maior que o mínimo (não zero)
-    non_zero = df_plot[df_plot[metric] > 0][metric]
+    non_zero = df[df[metric] > 0][metric]
     if not non_zero.empty:
         max_val = non_zero.max()
         min_val = non_zero.min()
-        if max_val / min_val > 50: # Sensibilidade aumentada para log scale
+        if max_val / min_val > 50:
             plt.yscale('log')
-            plt.ylabel(metric + " (Escala Log)")
+            plt.ylabel(metric + " (Escala Log)", labelpad=40)
 
-    plt.grid(axis='y', linestyle='--', alpha=0.6)
-    plt.xticks(rotation=0)
     plt.tight_layout()
-    
     filepath = os.path.join(PLOT_DIR, filename)
     plt.savefig(filepath)
     plt.close()
@@ -75,7 +132,6 @@ def main():
         print(f"Erro: Arquivo {INPUT_CSV} não encontrado. Execute o calculate_errors.py primeiro.")
         return
 
-    # Carregar dados
     try:
         df = pd.read_csv(INPUT_CSV)
     except Exception as e:
@@ -86,7 +142,7 @@ def main():
         print("Aviso: O CSV de métricas está vazio.")
         return
 
-    # Mapeamento de nomes para melhor legibilidade
+    # Mapeamento de nomes
     name_map = {
         'approx_radix4': 'Radix-4 Booth Approx',
         'approx_radix4_LOA': 'Radix-4 LOA Approx',
@@ -97,24 +153,28 @@ def main():
         'approx_mod_radix_comp': 'Mod Radix Comp Approx'
     }
     
-    # Filtrar apenas os multiplicadores que estão no name_map
+    # Filtrar os multiplicadores
     df = df[df['multiplier'].isin(name_map.keys())].copy()
     
-    # Aplicar o mapeamento
-    df['multiplier'] = df['multiplier'].map(name_map)
+    # Aplicar o mapeamento (e garantir a ordem categórica)
+    df['multiplier'] = pd.Categorical(df['multiplier'].map(name_map), categories=list(name_map.values()), ordered=True)
+    df = df.sort_values(['multiplier', 'bits', 'distribution'])
 
-    # Traduzir as distribuições
+    # Traduzir as distribuições e criar as colunas renomeadas para o plot
     dist_map = {
         'exponential': 'Exponencial',
         'normal': 'Normal',
         'uniform': 'Uniforme',
         'default': 'Padrão'
     }
-    df['distribution'] = df['distribution'].map(dist_map).fillna(df['distribution'])
+    df['Distribuição'] = df['distribution'].map(dist_map).fillna(df['distribution'])
+
+    # Converter bits para string categórica na nova coluna
+    df['Bits'] = df['bits'].astype(str)
 
     # Métricas para plotar
     metrics = {
-        "MAE": "Mean Absolute Error (MAE/MED)",
+        "MAE": "Mean Absolute Error (MAE)",
         "NMED": "Normalized Mean Error Distance (NMED)",
         "MRED": "Mean Relative Error Distance (MRED)",
         "EP": "Error Probability (EP)",
@@ -125,9 +185,7 @@ def main():
 
     for col, title in metrics.items():
         if col in df.columns:
-            # Filtramos valores 0 para o gráfico não ficar poluído com os casos exatos se houver muitos
-            # Mas mantemos os multiplicadores que queremos comparar
-            plot_error_metric(df, col, title, f"error_{col.lower().replace(' ', '_').replace('(', '').replace(')', '')}.pdf")
+            plot_error_metric(df, col, title, f"error_{col.lower()}.pdf")
 
     print("\nProcesso concluído com sucesso.")
 

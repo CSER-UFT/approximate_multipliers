@@ -12,16 +12,19 @@ INPUT_CSV = "summary.csv"
 PLOT_DIR = "./plots"
 os.makedirs(PLOT_DIR, exist_ok=True)
 
+# Cores e estilos
+sns.set_theme(style="whitegrid")
+
 # Configurações de fonte para LaTeX
 plt.rcParams.update({
-    'font.size': 22,
-    'axes.titlesize': 26,
-    'axes.labelsize': 24,
-    'xtick.labelsize': 22,
-    'ytick.labelsize': 22,
-    'legend.fontsize': 20,
-    'legend.title_fontsize': 22,
-    'figure.titlesize': 28
+    'font.size': 40,
+    'axes.titlesize': 50,
+    'axes.labelsize': 46,
+    'xtick.labelsize': 40,
+    'ytick.labelsize': 40,
+    'legend.fontsize': 34,
+    'legend.title_fontsize': 38,
+    'figure.titlesize': 54
 })
 
 # Mapeamento de tipos para nomes amigáveis (Sincronizado com plot_results.py)
@@ -42,9 +45,6 @@ TYPE_MAP = {
     "compressor": "Compressor 4:2",
     "radix4_compressor": "Radix + Compressor"
 }
-
-# Cores e estilos
-sns.set_theme(style="whitegrid")
 
 def classify(exp_name):
     """
@@ -139,7 +139,7 @@ def plot_dot_metric(df, metric, x_label, title, filename):
     if hasattr(df_plot['Architecture'], 'cat'):
         df_plot['Architecture'] = df_plot['Architecture'].cat.remove_unused_categories()
 
-    plt.figure(figsize=(10, 10))
+    plt.figure(figsize=(28, 26))
     
     # A ordem agora é ditada pela categoria definida no DataFrame
     order = [v for v in TYPE_MAP.values() if v in df_plot['Architecture'].unique()]
@@ -153,17 +153,17 @@ def plot_dot_metric(df, metric, x_label, title, filename):
     }
     
     # Criar o gráfico base usando scatterplot
-    # IMPORTANTE: Definimos explicitamente o eixo Y como categórico e mantemos a ordem
+    # IMPORTANTE: Definimos explicitamente o eixo X como categórico e mantemos a ordem
     ax = sns.scatterplot(
         data=df_plot,
-        y='Architecture',
-        x=metric,
+        x='Architecture',
+        y=metric,
         hue='Bits',
         style='Distribuição',
         markers=marker_map,
         palette='viridis',
-        s=150,
-        linewidth=2,
+        s=1200,
+        linewidth=6,
         alpha=1.0
     )
 
@@ -174,14 +174,14 @@ def plot_dot_metric(df, metric, x_label, title, filename):
             collection.set_edgecolors(facecolors)
             collection.set_facecolors('none')
 
-    # Garantir que o eixo Y respeite a ordem do TYPE_MAP e não ordene alfabeticamente
-    plt.gca().set_ylim(-0.5, len(order)-0.5)
-    plt.gca().set_yticks(range(len(order)))
-    plt.gca().set_yticklabels(order)
+    # Garantir que o eixo X respeite a ordem do TYPE_MAP e não ordene alfabeticamente
+    plt.gca().set_xlim(-0.5, len(order)-0.5)
+    plt.gca().set_xticks(range(len(order)))
+    plt.gca().set_xticklabels(order, rotation=45, ha='right')
     
-    plt.title(title, fontweight='bold', pad=20)
-    plt.xlabel(x_label)
-    plt.ylabel("Arquitetura")
+    plt.title(title, fontweight='bold', pad=30)
+    plt.ylabel(x_label, labelpad=40)
+    plt.xlabel("")
     
     # Configurar legenda customizada com espaço entre grupos
     handles, labels = ax.get_legend_handles_labels()
@@ -207,7 +207,10 @@ def plot_dot_metric(df, metric, x_label, title, filename):
         new_labels,
         title="Legenda", 
         bbox_to_anchor=(1.02, 1), 
-        loc='upper left'
+        loc='upper left',
+        markerscale=1.2,
+        labelspacing=0.8,
+        handletextpad=1
     )
     
     # Ajustar ícones da legenda para serem hollow (após reconstruir a legenda)
@@ -220,7 +223,7 @@ def plot_dot_metric(df, metric, x_label, title, filename):
                 edge = handle.get_facecolor()
                 handle.set_edgecolors(edge)
                 handle.set_facecolors('none')
-                handle.set_linewidth(2)
+                handle.set_linewidth(6)
             except:
                 pass
     
